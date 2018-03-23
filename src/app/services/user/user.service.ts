@@ -85,9 +85,14 @@ export class UserService {
     url += '?token=' + this.token;
 
     return this.http.put(url, user).map((response: any) => {
-      const userDB: User = response.user;
-      this.saveIntoStorage( userDB._id, this.token, userDB );
+
+      if ( user._id === this.user._id) {
+        const userDB: User = response.user;
+        this.saveIntoStorage( userDB._id, this.token, userDB );
+      }
+
       swal('Usuario actualizado correctamente', user.name, 'success');
+
       return true;
     });
   }
@@ -104,6 +109,26 @@ export class UserService {
       .catch( response => {
         console.log( response );
       });
+  }
+
+  loadUsersFromServer( from: number = 0) {
+    const url = URL_SERVICES + '/user?from=' + from;
+    return this.http.get( url );
+  }
+
+  searchUsersFromServer ( userToSearch: string ) {
+    const url = URL_SERVICES + '/search/collection/users/' + userToSearch;
+    return this.http.get( url )
+      .map( (response: any) => response.users);
+  }
+
+  deleteUserFromService(id: string) {
+    let url = URL_SERVICES + '/user/' + id;
+    url += '?token=' + this.token;
+    return this.http.delete ( url ).map( response => {
+      swal('Usuario borrado', 'El usuario ha sido eliminado correctamente', 'success');
+      return true;
+    });
   }
 
 }

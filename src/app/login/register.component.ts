@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
       }, { validators: this.areEquals('password', 'confirmPassword' )});
     // Autogenerator forms
     this.form.setValue({
-      name: 'Test',
+      name: 'Test ',
       email: 'test@test.com',
       password: '123456',
       confirmPassword: '123456',

@@ -21,6 +21,10 @@ import { DonaGraphicsComponent } from '../components/dona-graphics/dona-graphics
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './users/users.component';
+import { DoctorsComponent } from './doctors/doctors.component';
+import { HospitalsComponent } from './hospitals/hospitals.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 @NgModule({
@@ -34,7 +38,11 @@ import { ProfileComponent } from './profile/profile.component';
     PromiseComponent,
     AccountSettingsComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsersComponent,
+    DoctorsComponent,
+    HospitalsComponent,
+    ModalUploadComponent,
   ],
   imports: [
     SharedModule,
