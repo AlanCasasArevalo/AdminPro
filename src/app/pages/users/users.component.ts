@@ -37,7 +37,6 @@ export class UsersComponent implements OnInit {
       });
   }
 
-
   changeFrom(value: number) {
 
     const from = this.from + value;
@@ -98,7 +97,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  saveUser(userToUpdate: User) {
+  updateUser(userToUpdate: User) {
     this._userService.updateUser( userToUpdate )
         .subscribe();
   }
