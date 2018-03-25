@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { Hospital } from '../../models/hospital.model';
-import { User } from "../../models/user.model";
-import { ModalUploadService } from "../../components/modal-upload/modal-upload.service";
-import { HospitalService } from "../../services/hospital/hospital.service";
+import { User } from '../../models/user.model';
+import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
+import { HospitalService } from '../../services/hospital/hospital.service';
 
 declare var swal: any;
 
 @Component({
-  selector: "app-hospital",
-  templateUrl: "./hospital.component.html",
+  selector: 'app-hospital',
+  templateUrl: './hospital.component.html',
   styles: []
 })
 export class HospitalComponent implements OnInit {

@@ -38,7 +38,7 @@ export class HospitalService {
   }
 
   getHospitalById(id: string) {
-    const url = URL_SERVICES + '/hopital/' + id;
+    const url = URL_SERVICES + '/hospital/' + id;
     return this.http.get( url )
                .map( (response: any) => {
                 //  console.log(response);
