@@ -1,0 +1,49 @@
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Doctor: {{ doctor.name }}</h3>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #f="ngForm" ngNativeValidate (ngSubmit)="saveDoctor(f)">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">NOMBRE DEL MEDICO</label>
+                            <input [(ngModel)]="doctor.name" name="name" class="form-control" placeholder="Nombre" type="text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hospital</label>
+                            <select (change)="hospitalChanged( $event.target.value )" [(ngModel)]="doctor.hospital" name="hospital" class="form-control" required>
+                              <option value="">Seleccione un Hospital</option>
+                              <option *ngFor="let hospital of hospitals" [value]="hospital._id">
+                                {{ hospital.name }}
+                              </option>
+                            </select>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                          <i class="fa fa-save"></i>
+                          Guardar
+                        </button>
+                        <a routerLink="/doctors" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card card-body">
+
+            <h2 class="box-title m-b-0">Hospital</h2>
+            <img [src]=" hospital.img | image:'hospital'" class="rounded img-fluid">
+        </div>
+    </div>
+    <div class="col-md-3" *ngIf="doctor._id">
+        <div class="card card-body">
+
+            <h2 class="box-title m-b-0">Imagen</h2>
+            <img (click)="changeImage()" [src]=" doctor.img | image:'doctor'" class="img-circle img-fluid pointer">
+        </div>
+    </div>
+</div>

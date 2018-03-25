@@ -23,8 +23,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
 import { DoctorsComponent } from './doctors/doctors.component';
-import { HospitalsComponent } from './hospitals/hospitals.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { HospitalComponent } from './hospitals/hospital.component';
+import { DoctorComponent } from './doctors/doctor.component';
 
 
 @NgModule({
@@ -41,8 +42,9 @@ import { ModalUploadComponent } from '../components/modal-upload/modal-upload.co
     ProfileComponent,
     UsersComponent,
     DoctorsComponent,
-    HospitalsComponent,
+    HospitalComponent,
     ModalUploadComponent,
+    DoctorComponent,
   ],
   imports: [
     SharedModule,

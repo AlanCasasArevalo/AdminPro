@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input #input (keyup)="searchDoctor( input.value )" type="text" class="form-control" placeholder="Buscar hospital .....">
+                <input #input (keyup)="searchHospital( input.value )" type="text" class="form-control" placeholder="Buscar hospital .....">
             </div>
         </div>
     </div>
@@ -27,40 +27,36 @@
 
 
                 <div class="text-right">
-
-
-                    <button [routerLink]="['/doctor', 'new']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
-                        <i class="fa fa_plus">Crear doctor</i>
+                    <button (click)="createNewHospital()" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                        <i class="fa fa_plus">Crear hospital nuevo</i>
                     </button>
-
-
                 </div>
 
-                <h3 class="card-title"> Doctores resgistrados ( <small> {{ _doctorsService.totalDoctors }} </small> ) </h3>
+                <h3 class="card-title"> Hospitales resgistrados ( <small> {{ totalHospitals }} </small> ) </h3>
 
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th> Imagen </th>
                             <th> Nombre </th>
-                            <th> Hospital </th>
                             <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let doctor of doctors">
+                        <tr *ngFor="let hospital of hospitals">
                             <td class="w70">
-                                <img [src]=" doctor.img | image:'doctor' " class="img-50 pointer">
+                                <img (click)="updateHospitalImage( hospital )" [src]=" hospital.img | image:'hospital' " class="img-50 pointer">
                             </td>
-                            <td> {{ doctor.name }} </td>
-                            <td> {{ doctor.hospital.name }} </td>
                             <td>
-                                <button [routerLink]="['/doctor', doctor._id]" class="btn btn-primary">
-                                <i class="fa fa-edit"></i>
+                                <input [(ngModel)]="hospital.name" name="name" type="text" class="form-control" placeholder="Nombre del hospital">
+                            </td>
+                            <td>
+                                <button (click)="updateHospital ( hospital )" class="btn btn-primary">
+                                <i class="fa fa-save"></i>
                               </button>
 
-                                <button (click)="doctorToDelete( doctor )" class="btn btn-danger">
+                                <button (click)="hospitalToDelete( hospital )" class="btn btn-danger">
                                 <i class="fa fa-trash-o"></i>
                               </button>
                             </td>
@@ -69,11 +65,11 @@
 
                 </table>
 
-                <button *ngIf="from > 0" (click)="changeFrom(-5)" class="btn btn-secondary">
+                <button *ngIf="from>0" (click)="changeFrom(-5)" class="btn btn-secondary">
                 Anteriores
               </button>
 
-                <button *ngIf="from+5 <= _doctorsService.totalDoctors" (click)="changeFrom(5)" class="btn btn-secondary">
+                <button *ngIf="from+5<=totalHospitals" (click)="changeFrom(5)" class="btn btn-secondary">
                 Siguientes
               </button>
 

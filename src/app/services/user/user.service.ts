@@ -43,12 +43,12 @@ export class UserService {
   loginGoogle(token: string) {
     const url = URL_SERVICES + '/login/google';
     return this.http.post(url, { token }).map((response: any) => {
-      this.saveIntoStorage(response.id, response.token, response.user);
+      this.saveUserIntoStorage(response.id, response.token, response.user);
       return true;
     });
   }
 
-  saveIntoStorage(id: string, token: string, user: User) {
+  saveUserIntoStorage(id: string, token: string, user: User) {
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
@@ -66,7 +66,7 @@ export class UserService {
 
     const url = URL_SERVICES + '/login';
     return this.http.post(url, user).map((response: any) => {
-      this.saveIntoStorage(response.id, response.token, response.user);
+      this.saveUserIntoStorage(response.id, response.token, response.user);
 
       return true;
     });
@@ -88,7 +88,7 @@ export class UserService {
 
       if ( user._id === this.user._id) {
         const userDB: User = response.user;
-        this.saveIntoStorage( userDB._id, this.token, userDB );
+        this.saveUserIntoStorage( userDB._id, this.token, userDB );
       }
 
       swal('Usuario actualizado correctamente', user.name, 'success');
@@ -101,10 +101,10 @@ export class UserService {
     this._uploadFileService.uploadFiles( file, 'users', id)
       .then( (response: any) => {
 
-        console.log(`La respuesta al subir imagen es:`, response.User.img);
+        // console.log(`La respuesta al subir imagen es:`, response.User.img);
         this.user.img = response.User.img;
         swal ( 'Imagen de usuario actualizada', this.user.name, 'success');
-        this.saveIntoStorage( id, this.token, this.user );
+        this.saveUserIntoStorage( id, this.token, this.user );
       })
       .catch( response => {
         console.log( response );

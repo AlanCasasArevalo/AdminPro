@@ -15,6 +15,7 @@ declare function init_plugins();
   styleUrls: ['login.component.css']
 })
 export class RegisterComponent implements OnInit {
+
   form: FormGroup;
 
   constructor(
