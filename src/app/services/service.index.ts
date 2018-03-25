@@ -1,4 +1,3 @@
-
 export { DoctorService } from './doctor/doctor.service';
 export { HospitalService } from './hospital/hospital.service';
 export { UploadFileService } from './uploadFiles/upload-file.service';

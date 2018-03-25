@@ -13,6 +13,7 @@ import { UsersComponent } from './users/users.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { HospitalComponent } from './hospitals/hospital.component';
 import { DoctorComponent } from './doctors/doctor.component';
+import { AdminGuard } from '../services/guards/admin.guard';
 
 const pagesRoutes: Routes = [
     { path : '',
@@ -27,7 +28,12 @@ const pagesRoutes: Routes = [
         { path : 'account-settings', component : AccountSettingsComponent, data: { title: 'Configuracion temas' } },
         { path : 'profile', component : ProfileComponent, data: { title: 'Perfil de usuario' } },
         // Maintenance
-        { path : 'users', component : UsersComponent, data: { title: 'Mantenimiento de usuarios' } },
+        {
+            path : 'users',
+            component : UsersComponent,
+            canActivate: [ AdminGuard ],
+            data: { title: 'Mantenimiento de usuarios' }
+        },
         { path : 'doctors', component : DoctorsComponent, data: { title: 'Mantenimiento de doctores' } },
         { path : 'doctor/:id', component : DoctorComponent, data: { title: 'Mantenimiento de doctor' } },
         { path : 'hospitals', component : HospitalComponent, data: { title: 'Mantenimiento de hospitales' } },
