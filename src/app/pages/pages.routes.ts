@@ -14,13 +14,16 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { HospitalComponent } from './hospitals/hospital.component';
 import { DoctorComponent } from './doctors/doctor.component';
 import { AdminGuard } from '../services/guards/admin.guard';
+import { TokenVerifivationGuard } from '../services/guards/token-verifivation.guard';
 
 const pagesRoutes: Routes = [
-    { path : '',
-    component : PagesComponent,
-    canActivate: [ LoginGuardGuard ],
-    children: [
-        { path : 'dashboard', component : DashboardComponent, data: { title: 'Dashboard' } },
+
+        {
+            path : 'dashboard',
+            component : DashboardComponent,
+            canActivate: [ TokenVerifivationGuard ],
+            data: { title: 'Dashboard' }
+        },
         { path : 'progress', component : ProgressComponent, data: { title: 'ProgressBar' } },
         { path : 'graphics1', component : Graphics1Component, data: { title: 'Graficas' } },
         { path : 'promise', component : PromiseComponent, data: { title: 'Promesas' } },
@@ -37,8 +40,8 @@ const pagesRoutes: Routes = [
         { path : 'doctors', component : DoctorsComponent, data: { title: 'Mantenimiento de doctores' } },
         { path : 'doctor/:id', component : DoctorComponent, data: { title: 'Mantenimiento de doctor' } },
         { path : 'hospitals', component : HospitalComponent, data: { title: 'Mantenimiento de hospitales' } },
-        { path : '', redirectTo: 'dashboard', pathMatch: 'full'},
-    ]}
+        { path : '', redirectTo: 'dashboard', pathMatch: 'full'}
+
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

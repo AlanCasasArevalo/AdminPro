@@ -9,7 +9,12 @@ import { UploadFileService } from '../uploadFiles/upload-file.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Observable } from 'rxjs/Rx';
+// import 'rxjs/add/operator/throw';
+import 'rxjs/add/observable/throw';
+
+import { Observable } from 'rxjs/Observable';
+
+import swal from 'sweetalert';
 
 @Injectable()
 export class UserService {
@@ -47,6 +52,28 @@ export class UserService {
     localStorage.removeItem('user');
     localStorage.removeItem('menu');
     this.router.navigate(['/login']);
+  }
+
+
+  tokenRenew() {
+    let url = URL_SERVICES + '/login/tokenRenew';
+    url += '?token=' + this.token;
+    return this.http.get( url )
+               .map( (response: any) => {
+                  this.token = response.token;
+                  localStorage.setItem('token', this.token);
+                  console.log('Token renovado');
+                  return true;
+               }).catch ( error => {
+
+                // console.log('Error en Login');
+                // console.log(error.status);
+                // console.log(error.error.errors.message);
+
+                swal('No se pudo renovar el token', 'No fue posible renovar el token, lo sentimos', 'error');
+
+                return Observable.throw(error);
+               });
   }
 
   loginGoogle(token: string) {

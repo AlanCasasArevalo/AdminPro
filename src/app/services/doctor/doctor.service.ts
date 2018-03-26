@@ -4,6 +4,8 @@ import { URL_SERVICES } from '../../config/config';
 import { Doctor } from '../../models/doctor.model';
 import { UserService } from '../user/user.service';
 
+import swal from 'sweetalert';
+
 @Injectable()
 export class DoctorService {
   totalDoctors: number = 0;

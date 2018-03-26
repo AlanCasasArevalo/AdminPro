@@ -10,6 +10,7 @@ import {
   UploadFileService,
   HospitalService,
   DoctorService,
+  TokenVerifivationGuard,
 } from './service.index';
 
 import {  HttpClientModule } from '@angular/common/http';
@@ -30,6 +31,7 @@ import { AdminGuard } from './guards/admin.guard';
     HospitalService,
     LoginGuardGuard,
     AdminGuard,
+    TokenVerifivationGuard,
     UploadFileService,
     ModalUploadService
   ],

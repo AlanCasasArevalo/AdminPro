@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-rxjs',
@@ -68,7 +72,7 @@ export class RxjsComponent implements OnInit, OnDestroy {
         return false;
       }
 
-    } );
+    });
   }
 
 

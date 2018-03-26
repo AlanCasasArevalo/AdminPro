@@ -30,7 +30,7 @@ import { DoctorComponent } from './doctors/doctor.component';
 
 @NgModule({
   declarations: [
-    PagesComponent,
+    // PagesComponent,
     DashboardComponent,
     ProgressComponent,
     Graphics1Component,
@@ -43,7 +43,7 @@ import { DoctorComponent } from './doctors/doctor.component';
     UsersComponent,
     DoctorsComponent,
     HospitalComponent,
-    ModalUploadComponent,
+    // ModalUploadComponent,
     DoctorComponent,
   ],
   imports: [

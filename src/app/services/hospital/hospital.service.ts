@@ -7,6 +7,8 @@ import { User } from '../../models/user.model';
 import { UploadFileService } from '../../services/uploadFiles/upload-file.service';
 import { UserService } from '../user/user.service';
 
+import swal from 'sweetalert';
+
 @Injectable()
 export class HospitalService {
   hospital: Hospital;
