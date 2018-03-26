@@ -4,9 +4,12 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from '../../config/config';
 
-import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { UploadFileService } from '../uploadFiles/upload-file.service';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class UserService {
@@ -78,6 +81,15 @@ export class UserService {
       this.saveUserIntoStorage(response.id, response.token, response.user, response.menu);
 
       return true;
+    }).catch( error => {
+
+      console.log('Error en Login');
+      console.log(error.status);
+      console.log(error.error.mensaje);
+
+      swal('Error en autenticacion', error.error.mensaje, 'error');
+
+      return Observable.throw(error);
     });
   }
 
@@ -86,6 +98,15 @@ export class UserService {
     return this.http.post(url, user).map((response: any) => {
       swal('Usuario creado', user.email, 'success');
       return response.user;
+    }).catch( error => {
+
+      console.log('Error en Login');
+      console.log(error.status);
+      console.log(error.error.errors.message);
+
+      swal('Error en autenticacion', error.error.errors.message, 'error');
+
+      return Observable.throw(error);
     });
   }
 
@@ -103,6 +124,15 @@ export class UserService {
       swal('Usuario actualizado correctamente', user.name, 'success');
 
       return true;
+    }).catch( error => {
+
+      console.log('Error en Login');
+      console.log(error.status);
+      console.log(error.error.errors.message);
+
+      swal('Error en autenticacion', error.error.errors.message, 'error');
+
+      return Observable.throw(error);
     });
   }
 
