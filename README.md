@@ -5,6 +5,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This app needs Node back end server and MongoDB running to works correctly, the Back end attached is working corectly with this Angular app: 
+
+[Back-End](https://github.com/AlanCasasArevalo/AdminProBackEnd)
+
+HTML Templates used for this Angular app was taken from:
+
+[Wrappixel](https://wrappixel.com)
+
 
 ## Code scaffolding
 
