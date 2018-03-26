@@ -8,13 +8,14 @@ import { User } from '../../models/user.model';
   styles: []
 })
 export class SidebarComponent implements OnInit {
-
   user: User;
-  constructor( public _sidebar: SidebarService,
-               public _userServices: UserService) { }
+  constructor(
+    public _sidebarService: SidebarService,
+    public _userServices: UserService
+  ) {}
 
   ngOnInit() {
     this.user = this._userServices.user;
+    this._sidebarService.loadMenu();
   }
-
 }
