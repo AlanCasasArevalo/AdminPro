@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UploadFileService } from '../../services/service.index';
 import { ModalUploadService } from './modal-upload.service';
 
-import swal from 'sweetalert';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-modal-upload',
@@ -32,7 +34,7 @@ export class ModalUploadComponent implements OnInit {
   toUploadImage() {
     this._uploadFileService.uploadFiles ( this.uploadImage, this._modalUploadService.type, this._modalUploadService.id)
         .then( response => {
-          // console.log( response );
+          console.log( response );
           this._modalUploadService.notification.emit( response );
           this.closeModal();
         })
@@ -63,7 +65,7 @@ export class ModalUploadComponent implements OnInit {
     const temporalUrlImage = reader.readAsDataURL( file );
 
     reader.onloadend = () => {
-      // console.log( reader.result );
+      console.log( reader.result );
       this.temporalImage = reader.result;
     };
 

@@ -14,7 +14,9 @@ import 'rxjs/add/observable/throw';
 
 import { Observable } from 'rxjs/Observable';
 
-import swal from 'sweetalert';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
 
 @Injectable()
 export class UserService {
@@ -27,6 +29,8 @@ export class UserService {
   }
 
   authenticated() {
+    // console.log('Token en authenticated');
+    // console.log(this.token);
     return this.token.length > 5 ? true : false;
   }
 
@@ -46,7 +50,6 @@ export class UserService {
     this.user = null;
     this.token = '';
     this.menu = [];
-
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -76,14 +79,6 @@ export class UserService {
                });
   }
 
-  loginGoogle(token: string) {
-    const url = URL_SERVICES + '/login/google';
-    return this.http.post(url, { token }).map((response: any) => {
-      this.saveUserIntoStorage(response.id, response.token, response.user, response.menu);
-      return true;
-    });
-  }
-
   saveUserIntoStorage(id: string, token: string, user: User, menu: any) {
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
@@ -96,6 +91,7 @@ export class UserService {
   }
 
   login(user: User, rememberme: boolean = false) {
+
     if (rememberme) {
       localStorage.setItem('email', user.email);
     } else {
@@ -104,34 +100,44 @@ export class UserService {
 
     const url = URL_SERVICES + '/login';
     return this.http.post(url, user).map((response: any) => {
-      // console.log(response);
-      this.saveUserIntoStorage(response.id, response.token, response.user, response.menu);
-
+      // console.log(response.token);
+      console.log('Respuesta en el login response');
+      console.log( response.user );
+      this.saveUserIntoStorage(response.user._id, response.token, response.user, response.menu);
       return true;
     }).catch( error => {
+      // console.log(error);
 
-      console.log('Error en Login');
-      console.log(error.status);
-      console.log(error.error.mensaje);
+      const err = error.error.error.message;
+      // console.log('Error en Login');
+      // console.log(err);
 
-      swal('Error en autenticacion', error.error.mensaje, 'error');
+      swal('Error en autenticacion', err, 'error');
 
       return Observable.throw(error);
     });
   }
 
   createNewUser(user: User) {
-    const url: string = URL_SERVICES + '/user';
+    const url = URL_SERVICES + '/register';
+    // console.log('La url es:');
+    // console.log(url);
+
     return this.http.post(url, user).map((response: any) => {
+      // console.log('La url es:');
+      // console.log(url);
+      // console.log('Respuesta al crear usuario');
+      // console.log( user );
+
       swal('Usuario creado', user.email, 'success');
       return response.user;
+
     }).catch( error => {
+      // console.log( error );
+      // console.log( error.error.error.message );
+      const err = error.error.error.message;
 
-      console.log('Error en Login');
-      console.log(error.status);
-      console.log(error.error.errors.message);
-
-      swal('Error en autenticacion', error.error.errors.message, 'error');
+      swal('Error en autenticacion', err, 'error');
 
       return Observable.throw(error);
     });
@@ -167,18 +173,20 @@ export class UserService {
     this._uploadFileService.uploadFiles( file, 'users', id)
       .then( (response: any) => {
 
-        // console.log(`La respuesta al subir imagen es:`, response.User.img);
+        console.log(`La respuesta al subir imagen es:`, response);
         this.user.img = response.User.img;
         swal ( 'Imagen de usuario actualizada', this.user.name, 'success');
         this.saveUserIntoStorage( id, this.token, this.user, this.menu );
       })
       .catch( response => {
+        console.log(`La respuesta al no poder subir la imagen es:`);
         console.log( response );
       });
   }
 
   loadUsersFromServer( from: number = 0) {
-    const url = URL_SERVICES + '/user?from=' + from;
+    let url = URL_SERVICES + '/users';
+    url += '?token=' + this.token;
     return this.http.get( url );
   }
 
@@ -189,9 +197,11 @@ export class UserService {
   }
 
   deleteUserFromService(id: string) {
-    let url = URL_SERVICES + '/user/' + id;
+    let url = URL_SERVICES + '/users/' + id;
     url += '?token=' + this.token;
-    return this.http.delete ( url ).map( response => {
+    return this.http.delete ( url ).map( (response: any) => {
+      console.log('Usuario a borrar');
+      console.log(response);
       swal('Usuario borrado', 'El usuario ha sido eliminado correctamente', 'success');
       return true;
     });

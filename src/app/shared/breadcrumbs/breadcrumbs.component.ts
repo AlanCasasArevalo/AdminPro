@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivationEnd } from '@angular/router';
-import { map, filter } from 'rxjs/operators';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
 import { Title, Meta, MetaDefinition } from '@angular/platform-browser';
 
 @Component({

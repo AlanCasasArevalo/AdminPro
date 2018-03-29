@@ -3,7 +3,9 @@ import { User } from '../../models/user.model';
 import { UserService } from '../../services/user/user.service';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
-declare var swal: any;
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-users',
@@ -27,12 +29,12 @@ export class UsersComponent implements OnInit {
   loadUsers() {
     this.loading = true;
     this._userService
-      .loadUsersFromServer(this.from)
+      .loadUsersFromServer()
       .subscribe((response: any) => {
-        // console.log(response);
-        this.totalUsers = response.total;
-        this.users = response.user;
-        // console.log(this.users);
+        console.log(response.result.rows);
+        this.totalUsers = response.result.rows.length;
+        this.users = response.result.rows;
+        console.log(this.users);
         this.loading = false;
       });
   }
@@ -69,7 +71,8 @@ export class UsersComponent implements OnInit {
   }
 
   userToDelete( userToDelete: User ) {
-    // console.log(userToDelete);
+    console.log('Usuario a borrar');
+    console.log(userToDelete);
     // Si el user es el mismo que el user a borrar no se borra
     // TODO: hacer que solo un admin pueda borrar
     if ( userToDelete._id === this._userService.user._id ) {
@@ -77,19 +80,14 @@ export class UsersComponent implements OnInit {
       return;
     }
 
-    swal({
-      title: '¿Estas seguro?',
-      text: 'Estas a punto de borrar a ' + userToDelete.name,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    })
+    swal('Has borrado', 'Borraste al usuario ' + userToDelete.name , 'success' )
     .then( willDelete  => {
       // console.log(willDelete);
       if ( willDelete ) {
         this._userService.deleteUserFromService(userToDelete._id)
             .subscribe( deleted => {
-              // console.log( deleted );
+              console.log('Al borrar:');
+              console.log( deleted );
               this.loadUsers();
             });
       }

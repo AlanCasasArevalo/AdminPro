@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/service.index';
 
-import swal from 'sweetalert';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-profile',
@@ -28,10 +30,6 @@ export class ProfileComponent implements OnInit {
   saveValuesToForm( user: User ) {
 
     this.user.name = user.name;
-
-    if ( !this.user.google ) {
-      this.user.email = user.email;
-    }
 
     this._userService.updateUser(this.user)
     .subscribe( response => {

@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../services/service.index';
 
-import swal from 'sweetalert';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
+const swal: SweetAlert = _swal as any;
+
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-
 
 declare function init_plugins();
 
@@ -16,6 +18,7 @@ declare function init_plugins();
 })
 export class RegisterComponent implements OnInit {
 
+  isProfessional: boolean = false;
   form: FormGroup;
 
   constructor(
@@ -52,7 +55,8 @@ export class RegisterComponent implements OnInit {
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, Validators.required),
         confirmPassword: new FormControl(null, Validators.required),
-        conditions: new FormControl()
+        conditions: new FormControl(),
+        isProfessional: new FormControl(null, Validators.required)
       }, { validators: this.areEquals('password', 'confirmPassword' )});
     // Autogenerator forms
     this.form.setValue({
@@ -60,7 +64,8 @@ export class RegisterComponent implements OnInit {
       email: 'test@test.com',
       password: '123456',
       confirmPassword: '123456',
-      conditions: true
+      conditions: true,
+      isProfessional: this.isProfessional
     });
   }
 
@@ -71,23 +76,30 @@ export class RegisterComponent implements OnInit {
     }
 
     if ( !this.form.value.conditions ) {
-      swal('Importante', 'Debe de acepetar las condiciones de uso para continuar', 'warning');
-
+      swal('Importante', 'Debe de aceptar las condiciones de uso para continuar', 'warning');
       return;
     }
 
+    // console.log('El formulario es: ');
+    // console.log(this.form.value);
     const user = new User(
       this.form.value.name,
       this.form.value.email,
-      this.form.value.password
+      this.form.value.password,
+      '',
+      this.form.value.isProfessional
     );
-    console.log(`El formulario es: ${this.form.valid}`);
-    console.log(this.form.value);
+
+    // console.log(`El formulario es: ${this.form.valid}`);
+    // console.log(this.form.value);
 
     this._userService.createNewUser( user )
-    .subscribe( response => {
-      console.log( response );
-      this._router.navigate(['/login']);
-    });
+        .subscribe( response => {
+          // console.log('Respuesta al crear user en register component');
+          // console.log( response );
+          // console.log( user );
+          // TODO:navigation
+          this._router.navigate(['/login']);
+        });
   }
 }

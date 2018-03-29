@@ -13,38 +13,30 @@ import { ChartsModule } from 'ng2-charts';
 // Our components
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProgressComponent } from './progress/progress.component';
-import { Graphics1Component } from './graphics1/graphics1.component';
-import { IncrementerComponent } from '../components/incrementer/incrementer.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
-import { DonaGraphicsComponent } from '../components/dona-graphics/dona-graphics.component';
-import { PromiseComponent } from './promise/promise.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
-import { DoctorsComponent } from './doctors/doctors.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
-import { HospitalComponent } from './hospitals/hospital.component';
-import { DoctorComponent } from './doctors/doctor.component';
+import { ProductsComponent } from './products/products.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { BlogComponent } from './blog/blog.component';
+import { ProductComponent } from './product/product.component';
 
 
 @NgModule({
   declarations: [
-    // PagesComponent,
     DashboardComponent,
-    ProgressComponent,
-    Graphics1Component,
-    IncrementerComponent,
-    DonaGraphicsComponent,
-    PromiseComponent,
     AccountSettingsComponent,
-    RxjsComponent,
     ProfileComponent,
     UsersComponent,
-    DoctorsComponent,
-    HospitalComponent,
-    // ModalUploadComponent,
-    DoctorComponent,
+    ProductsComponent,
+    BlogsComponent,
+    AppointmentsComponent,
+    AppointmentComponent,
+    BlogComponent,
+    ProductComponent,
   ],
   imports: [
     SharedModule,
@@ -56,8 +48,6 @@ import { DoctorComponent } from './doctors/doctor.component';
   ],
   exports: [
     DashboardComponent,
-    ProgressComponent,
-    Graphics1Component,
   ]
 })
 export class PagesModule { }

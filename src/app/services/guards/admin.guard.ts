@@ -12,8 +12,7 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate() {
-
-    if (this._userService.user.role === 'ADMIN_ROLE') {
+    if (this._userService.user.isProfessional) {
       return true;
     } else {
       console.log('Bloqueado por el ADMIN GUARD');

@@ -8,8 +8,6 @@ import {
   UserService,
   LoginGuardGuard,
   UploadFileService,
-  HospitalService,
-  DoctorService,
   TokenVerifivationGuard,
 } from './service.index';
 
@@ -27,8 +25,6 @@ import { AdminGuard } from './guards/admin.guard';
     SidebarService,
     SharedService,
     UserService,
-    DoctorService,
-    HospitalService,
     LoginGuardGuard,
     AdminGuard,
     TokenVerifivationGuard,
