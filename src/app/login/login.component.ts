@@ -38,6 +38,6 @@ export class LoginComponent implements OnInit {
     const user = new User(null, form.value.email, form.value.password);
 
     this._userServices.login( user, form.value.rememberme )
-      .subscribe( validationCorrect => this.router.navigate(['/dashboard']));
+    .subscribe( validationCorrect => this.router.navigate(['/dashboard']));
   }
 }

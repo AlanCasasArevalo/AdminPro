@@ -11,6 +11,8 @@ import { TokenVerifivationGuard } from '../services/guards/token-verifivation.gu
 import { ProductsComponent } from './products/products.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
+import { ServicesComponent } from './services/services.component';
+import { ServiceComponent } from './service/service.component';
 
 const pagesRoutes: Routes = [
 
@@ -31,6 +33,8 @@ const pagesRoutes: Routes = [
         },
         { path: 'products', component: ProductsComponent, data : {title: 'Productos'}},
         { path: 'product/:id', component: ProductsComponent, data : {title: 'Producto'}},
+        { path: 'services', component: ServicesComponent, data : {title: 'Services'}},
+        { path: 'service', component: ServiceComponent, data : {title: 'Service'}},
         { path: 'blogs', component: BlogsComponent, data : {title: 'Blogs'}},
         { path: 'blog/:id', component: BlogsComponent, data : {title: 'Blog'}},
         { path: 'appointments', component: AppointmentsComponent, data : {title: 'Citas'}},

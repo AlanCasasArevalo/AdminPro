@@ -8,7 +8,10 @@ import {
   UserService,
   LoginGuardGuard,
   UploadFileService,
+  ServicesService,
   TokenVerifivationGuard,
+  ProductsService,
+  AppointmentsService,
 } from './service.index';
 
 import {  HttpClientModule } from '@angular/common/http';
@@ -29,6 +32,9 @@ import { AdminGuard } from './guards/admin.guard';
     AdminGuard,
     TokenVerifivationGuard,
     UploadFileService,
+    ProductsService,
+    ServicesService,
+    AppointmentsService,
     ModalUploadService
   ],
   declarations: []

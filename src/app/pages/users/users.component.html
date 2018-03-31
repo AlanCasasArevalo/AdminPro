@@ -32,7 +32,7 @@
                         <tr>
                             <th> Imagen </th>
                             <th> Nombre </th>
-                            <th> Correo </th>
+                            <!-- <th> Correo </th> -->
                             <th> Es Fisio </th>
                         </tr>
                     </thead>
@@ -43,7 +43,7 @@
                                 <img (click)="toShowModal( user._id )" [src]=" user.img | image " class="img-50 img-circle pointer">
                             </td>
                             <td> {{ user.name }} </td>
-                            <td> {{ user.email }} </td>
+                            <!-- <td> {{ user.email }} </td> -->
                             <td>
                                 <select [(ngModel)]="user.isProfessional" name="isProfessional" class="form-control">
                                     <option value="true">Si</option>

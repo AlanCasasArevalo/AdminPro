@@ -168,10 +168,9 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a routerLink="/profile"><i class="ti-user"></i> Perfil </a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                             <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                            <li routerLinkActive="active"><a routerLink="/account-settings">Account Setting</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a (click)="_userServices.logOut()" class="pointer"><i class="fa fa-power-off"></i> Logout</a></li>
                         </ul>

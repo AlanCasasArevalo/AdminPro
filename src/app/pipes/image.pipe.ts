@@ -10,8 +10,8 @@ export class ImagePipe implements PipeTransform {
 
     let url = URL_SERVICES + '/images';
 
-    console.log('carga de imagenes en Pipe');
-    console.log( url );
+    // console.log('carga de imagenes en Pipe');
+    // console.log( url );
 
     if ( !image ) {
       return url + '/users/xxx';

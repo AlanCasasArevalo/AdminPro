@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user/user.service';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
+import { Service } from '../../models/service.model';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -13,6 +12,7 @@ const swal: SweetAlert = _swal as any;
   styles: []
 })
 export class UsersComponent implements OnInit {
+
   users: User[] = [];
   from: number = 0;
   totalUsers: number = 0;
@@ -29,12 +29,13 @@ export class UsersComponent implements OnInit {
   loadUsers() {
     this.loading = true;
     this._userService
-      .loadUsersFromServer()
+      .loadUsersFromServer(this.from)
       .subscribe((response: any) => {
-        console.log(response.result.rows);
+        // console.log('Respuesta al recibir los usuarios del back');
+        // console.log(response);
         this.totalUsers = response.result.rows.length;
         this.users = response.result.rows;
-        console.log(this.users);
+        // console.log(this.users);
         this.loading = false;
       });
   }
@@ -42,7 +43,8 @@ export class UsersComponent implements OnInit {
   changeFrom(value: number) {
 
     const from = this.from + value;
-    // console.log( from );
+    console.log('From en changeFrom user.components.ts');
+    console.log( from );
 
     if ( from >= this.totalUsers || from < 0) {
       return;
@@ -74,22 +76,29 @@ export class UsersComponent implements OnInit {
     console.log('Usuario a borrar');
     console.log(userToDelete);
     // Si el user es el mismo que el user a borrar no se borra
-    // TODO: hacer que solo un admin pueda borrar
     if ( userToDelete._id === this._userService.user._id ) {
       swal('No se puede borrar', 'No te puedes borrar a ti mismo', 'error');
       return;
     }
 
-    swal('Has borrado', 'Borraste al usuario ' + userToDelete.name , 'success' )
-    .then( willDelete  => {
+    swal({
+      title: `¿Seguro que quieres borrar al usuario ${ userToDelete.name }?`,
+      text: 'No podras revertir los cambios',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar'
+    }).then( willDelete  => {
       // console.log(willDelete);
       if ( willDelete ) {
         this._userService.deleteUserFromService(userToDelete._id)
-            .subscribe( deleted => {
-              console.log('Al borrar:');
-              console.log( deleted );
-              this.loadUsers();
-            });
+        .subscribe( deleted => {
+          swal('Borrado', 'Ese usuario ha sido borrado', 'success');
+          console.log('Al borrar:');
+          console.log( deleted );
+          this.loadUsers();
+        });
       }
 
     });
@@ -104,4 +113,5 @@ export class UsersComponent implements OnInit {
     // console.log(this._modalUploadService.toShowModal('users', userId));
     this._modalUploadService.toShowModal( 'users', userId );
   }
+
 }

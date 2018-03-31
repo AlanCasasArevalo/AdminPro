@@ -9,14 +9,11 @@ import { UploadFileService } from '../uploadFiles/upload-file.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-// import 'rxjs/add/operator/throw';
 import 'rxjs/add/observable/throw';
 
 import { Observable } from 'rxjs/Observable';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
+import swal from 'sweetalert2';
 
 @Injectable()
 export class UserService {
@@ -100,6 +97,7 @@ export class UserService {
 
     const url = URL_SERVICES + '/login';
     return this.http.post(url, user).map((response: any) => {
+      console.log(url);
       // console.log(response.token);
       console.log('Respuesta en el login response');
       console.log( response.user );
@@ -144,9 +142,11 @@ export class UserService {
   }
 
   updateUser(user: User) {
-    let url = URL_SERVICES + '/user/' + user._id;
+    let url = URL_SERVICES + '/users/' + user._id;
     url += '?token=' + this.token;
 
+    console.log('URL para actualizar los usuarios por id');
+    console.log( url );
     return this.http.put(url, user).map((response: any) => {
 
       if ( user._id === this.user._id) {
@@ -159,9 +159,9 @@ export class UserService {
       return true;
     }).catch( error => {
 
-      console.log('Error en Login');
-      console.log(error.status);
-      console.log(error.error.errors.message);
+      console.log('Error al Actualizar');
+      console.log(error);
+      console.log(error.message);
 
       swal('Error en autenticacion', error.error.errors.message, 'error');
 
@@ -199,6 +199,8 @@ export class UserService {
   deleteUserFromService(id: string) {
     let url = URL_SERVICES + '/users/' + id;
     url += '?token=' + this.token;
+    url += '?email=' + this.user.email;
+    url += '?password=' + this.user.password;
     return this.http.delete ( url ).map( (response: any) => {
       console.log('Usuario a borrar');
       console.log(response);

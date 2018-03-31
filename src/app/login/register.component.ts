@@ -98,7 +98,6 @@ export class RegisterComponent implements OnInit {
           // console.log('Respuesta al crear user en register component');
           // console.log( response );
           // console.log( user );
-          // TODO:navigation
           this._router.navigate(['/login']);
         });
   }

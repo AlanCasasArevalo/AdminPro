@@ -23,6 +23,8 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { BlogComponent } from './blog/blog.component';
 import { ProductComponent } from './product/product.component';
+import { ServicesComponent } from './services/services.component';
+import { ServiceComponent } from './service/service.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { ProductComponent } from './product/product.component';
     AppointmentComponent,
     BlogComponent,
     ProductComponent,
+    ServicesComponent,
+    ServiceComponent,
   ],
   imports: [
     SharedModule,
