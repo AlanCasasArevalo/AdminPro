@@ -1,37 +1,41 @@
 <div class="row animated fadeIn">
     <div class="col-md-6">
         <div class="card card-body">
-            <h3 class="box-title m-b-0">Producto: {{ doctor.name }}</h3>
+            <h1 class="box-title m-b-0"> Crear nuevo producto:</h1>
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
-                    <form #f="ngForm" ngNativeValidate (ngSubmit)="saveDoctor(f)">
+                    <form #form="ngForm" ngNativeValidate (ngSubmit)="createNewProduct( form )">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">NOMBRE DEL MEDICO</label>
-                            <input [(ngModel)]="doctor.name" name="name" class="form-control" placeholder="Nombre" type="text" required>
+                            <input [(ngModel)]="product.name" name="name" class="form-control" placeholder="Nombre" type="text" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Hospital</label>
-                            <select (change)="hospitalChanged( $event.target.value )" [(ngModel)]="doctor.hospital" name="hospital" class="form-control" required>
-                            <option value="">Seleccione un Hospital</option>
-                            <option *ngFor="let hospital of hospitals" [value]="hospital._id">
-                              {{ hospital.name }}
-                            </option>
-                          </select>
-
+                            <input [(ngModel)]="product.description" name="description" class="form-control" placeholder="Descripcion" type="text" required>
                         </div>
+
+                        <div class="form-group">
+                            <input [(ngModel)]="product.price" name="price" class="form-control" placeholder="Precio" type="text" required>
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <select class="custom-select col-12" id="inlineFormCustomSelect">
+                                    <option selected="">¿Esta activo?</option>
+                                    <option value="1">Si</option>
+                                    <option value="2">No</option>
+                                </select>
+                        </div> -->
 
                         <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
-                        <i class="fa fa-save"></i>
-                        Guardar
-                      </button>
-                        <a routerLink="/doctors" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+                              <i class="fa fa-save"></i>
+                              Guardar
+                            </button>
+                        <a routerLink="/products" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- 
     <div class="col-md-3">
         <div class="card card-body">
 
@@ -45,5 +49,5 @@
             <h2 class="box-title m-b-0">Imagen</h2>
             <img (click)="changeImage()" [src]=" doctor.img | image:'doctor'" class="img-circle img-fluid pointer">
         </div>
-    </div>
+    </div> -->
 </div>

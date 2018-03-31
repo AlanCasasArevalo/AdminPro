@@ -11,7 +11,7 @@ import { UserService } from '../../services/service.index';
 })
 export class ServiceComponent implements OnInit {
 
-  service: Service = new Service('', '', '', 0, false);
+  service: Service = new Service('', '', '', 0);
 
   constructor(
     public _servicesService: ServicesService,
@@ -23,8 +23,8 @@ export class ServiceComponent implements OnInit {
 
   createNewService( form: NgForm ) {
 
-    console.log('Pasamos por el crear nuevo servicio');
-    let isActive = true;
+    // console.log('Pasamos por el crear nuevo servicio');
+    // let isActive = true;
 
     if (form.invalid) {
       console.log('El formulario es invalido');
@@ -48,7 +48,6 @@ export class ServiceComponent implements OnInit {
     this.service.name = form.value.name;
     this.service.description = form.value.description;
     this.service.price = form.value.price;
-    this.service.isActive = isActive;
 
     console.log('El servicio es:');
     console.log( this.service );

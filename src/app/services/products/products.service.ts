@@ -37,7 +37,11 @@ export class ProductsService {
   }
 
   createNewProduct( product: Product ) {
-    const url = URL_SERVICES + '/products';
+    // http://localhost:3000/apiv1/products/
+    // const url = URL_SERVICES + '/products';
+    let url = URL_SERVICES + '/products';
+    url += '?token=' + this._userService.token;
+
     console.log('La url es:');
     console.log(url);
     console.log('Producto recibido');
@@ -54,7 +58,6 @@ export class ProductsService {
 
     }).catch( error => {
       console.log('Error en profuct.services al crear producto');
-      console.log( error );
       console.log( error );
       // const err = error.error.error.message;
       // swal('Error en autenticacion', err, 'error');

@@ -5,6 +5,6 @@ export class Blog {
         public user?: string,
         public description?: string,
         public img?: string,
-        public isVisible?: boolean
+        // public isVisible?: boolean
     ) { }
 }

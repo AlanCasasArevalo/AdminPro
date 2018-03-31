@@ -18,13 +18,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './users/users.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { ProductsComponent } from './products/products.component';
-import { BlogsComponent } from './blogs/blogs.component';
-import { AppointmentsComponent } from './appointments/appointments.component';
-import { AppointmentComponent } from './appointment/appointment.component';
-import { BlogComponent } from './blog/blog.component';
 import { ProductComponent } from './product/product.component';
 import { ServicesComponent } from './services/services.component';
 import { ServiceComponent } from './service/service.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { BlogComponent } from './blog/blog.component';
 
 
 @NgModule({
@@ -33,14 +33,14 @@ import { ServiceComponent } from './service/service.component';
     AccountSettingsComponent,
     ProfileComponent,
     UsersComponent,
-    ProductsComponent,
-    BlogsComponent,
-    AppointmentsComponent,
-    AppointmentComponent,
-    BlogComponent,
-    ProductComponent,
     ServicesComponent,
     ServiceComponent,
+    ProductsComponent,
+    ProductComponent,
+    AppointmentsComponent,
+    AppointmentComponent,
+    BlogsComponent,
+    BlogComponent,
   ],
   imports: [
     SharedModule,

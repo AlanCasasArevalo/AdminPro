@@ -13,3 +13,9 @@ export class Appoitment {
     ) {}
 
 }
+/*
+  customer        : { type: mongoose.Schema.ObjectId, ref: User },
+  professional    : { type: mongoose.Schema.ObjectId, ref: User },
+  latitude        : Number,
+  longitude       : Number,
+*/

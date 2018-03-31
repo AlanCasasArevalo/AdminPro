@@ -38,16 +38,16 @@ export class ServicesService {
   createNewService( service: Service ) {
     let url = URL_SERVICES + '/services';
     url += '?token=' + this._userService.token;
-    console.log('La url es:');
-    console.log(url);
-    console.log('Servicio recibido');
-    console.log( service );
+    // console.log('La url es:');
+    // console.log(url);
+    // console.log('Servicio recibido');
+    // console.log( service );
 
     return this.http.post(url, service).map((response: any) => {
 
-      console.log('La url es:');
-      console.log(url);
-      console.log('Respuesta al crear service');
+      // console.log('La url es:');
+      // console.log(url);
+      // console.log('Respuesta al crear service');
       console.log( response );
 
       return response;

@@ -13,6 +13,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { ServicesComponent } from './services/services.component';
 import { ServiceComponent } from './service/service.component';
+import { ProductComponent } from './product/product.component';
 
 const pagesRoutes: Routes = [
 
@@ -32,13 +33,13 @@ const pagesRoutes: Routes = [
             data: { title: 'Mantenimiento de usuarios' }
         },
         { path: 'products', component: ProductsComponent, data : {title: 'Productos'}},
-        { path: 'product/:id', component: ProductsComponent, data : {title: 'Producto'}},
+        { path: 'product', component: ProductComponent, data : {title: 'Producto'}},
         { path: 'services', component: ServicesComponent, data : {title: 'Services'}},
         { path: 'service', component: ServiceComponent, data : {title: 'Service'}},
         { path: 'blogs', component: BlogsComponent, data : {title: 'Blogs'}},
-        { path: 'blog/:id', component: BlogsComponent, data : {title: 'Blog'}},
+        { path: 'blog', component: BlogsComponent, data : {title: 'Blog'}},
         { path: 'appointments', component: AppointmentsComponent, data : {title: 'Citas'}},
-        { path: 'appointment/:id', component: AppointmentsComponent, data : {title: 'Cita'}},
+        { path: 'appointment', component: AppointmentsComponent, data : {title: 'Cita'}},
         { path : '', redirectTo: 'dashboard', pathMatch: 'full'}
 
 ];
