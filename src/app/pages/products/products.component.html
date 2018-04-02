@@ -26,7 +26,7 @@
             <div class="card-body">
 
                 <div *ngIf="_userServices.user.isProfessional" class="text-right">
-                    <button [routerLink]="['/product']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                    <button [routerLink]="['/product', 'new']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
                         <i class="fa fa_plus">Crear producto nuevo</i>
                     </button>
                 </div>
@@ -54,9 +54,9 @@
                             <td> {{ product.price }} </td>
                             <!-- <td> {{ product.isActive }} </td> -->
                             <td *ngIf="_userServices.user.isProfessional">
-                                <button (click)="updateProduct( product )" class="btn btn-primary">
+                                <button [routerLink]="['/product', product._id]" class="btn btn-primary">
                                     <i class="fa fa-edit"></i>
-                              </button>
+                                </button>
 
                                 <button (click)="productToDelete( product )" class="btn btn-danger">
                                 <i class="fa fa-trash-o"></i>
@@ -64,7 +64,6 @@
                             </td>
                         </tr>
                     </tbody>
-
                 </table>
 
                 <!-- <button *ngIf="from>0" (click)="changeFrom(-5)" class="btn btn-secondary">

@@ -35,33 +35,59 @@ export class ServicesService {
     return this.http.get( url );
   }
 
-  createNewService( service: Service ) {
+  createOrUploadService( service: Service ) {
+    console.log('service para actualizar');
+    console.log(service);
     let url = URL_SERVICES + '/services';
-    url += '?token=' + this._userService.token;
-    // console.log('La url es:');
-    // console.log(url);
-    // console.log('Servicio recibido');
-    // console.log( service );
-
-    return this.http.post(url, service).map((response: any) => {
-
-      // console.log('La url es:');
+    if (service._id) {
+      url += '/' + service._id;
+      url += '?token=' + this._userService.token;
+      // console.log('URL Para actualizar');
       // console.log(url);
-      // console.log('Respuesta al crear service');
-      console.log( response );
+      return this.http.put(url, service).map((response: any) => {
+        console.log('service Actualizado');
+        console.log(response.result);
+        return response.result;
+      });
+    } else {
+      url += '?token=' + this._userService.token;
 
-      return response;
+      return this.http.post(url, service).map((response: any) => {
+        // console.log('Response al crear el service:');
+        // console.log(response.result);
+        swal('service creado', service.name, 'success');
+        return response.result;
+      });
+    }
 
-    }).catch( error => {
-      console.log('Error en profuct.services al crear service');
-      console.log( error );
-      // console.log( error );
-      // const err = error.error.error.message;
-      // swal('Error en autenticacion', err, 'error');
-      return Observable.throw(error);
+  }
+
+  loadServiceByID(id: string) {
+    // console.log('Entramos en el back-end');
+    let url = URL_SERVICES + '/services';
+    url += '?id=' + id;
+    url += '&token=' + this._userService.token;
+    // console.log('Url del back');
+    // console.log(url);
+    return this.http.get(url).map((response: any) => {
+
+      // console.log('service por id devuelto por el servicio');
+      // console.log(response.result.rows[0]);
+      return response.result.rows[0];
     });
   }
 
-
+  deleteService(id: string) {
+    let url = URL_SERVICES + '/services/' + id;
+    url += '?token=' + this._userService.token;
+    return this.http.delete(url).map(response => {
+      swal(
+        'Servicio borrado',
+        'El doctor ha sido eliminado correctamente',
+        'success'
+      );
+      return true;
+    });
+  }
 
 }

@@ -92,6 +92,9 @@ export class UsersComponent implements OnInit {
     }).then( willDelete  => {
       // console.log(willDelete);
       if ( willDelete ) {
+        console.log('El objeto a borrar es:');
+        console.log(userToDelete);
+        // console.log(willDelete);
         this._userService.deleteUserFromService(userToDelete._id)
         .subscribe( deleted => {
           swal('Borrado', 'Ese usuario ha sido borrado', 'success');
@@ -106,7 +109,9 @@ export class UsersComponent implements OnInit {
 
   updateUser(userToUpdate: User) {
     this._userService.updateUser( userToUpdate )
-        .subscribe();
+        .subscribe( (response: any) => {
+          console.log(response);
+        });
   }
 
   toShowModal( userId: string ) {

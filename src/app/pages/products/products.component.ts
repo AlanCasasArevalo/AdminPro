@@ -54,6 +54,8 @@ export class ProductsComponent implements OnInit {
     this._modalUploadService.toShowModal('products', productID);
   }
 
-  updateProduct(product) {}
-  productToDelete(product) {}
+  productToDelete(product) {
+    this._productsService.deleteProduct( product._id )
+    .subscribe(() => this.loadProducts());
+  }
 }

@@ -36,32 +36,58 @@ export class ProductsService {
     return this.http.get( url );
   }
 
-  createNewProduct( product: Product ) {
-    // http://localhost:3000/apiv1/products/
-    // const url = URL_SERVICES + '/products';
+  createOrUploadProduct( product: Product ) {
+    console.log('Producto para actualizar');
+    console.log(product);
     let url = URL_SERVICES + '/products';
+    if (product._id) {
+      url += '/' + product._id;
+      url += '?token=' + this._userService.token;
+      // console.log('URL Para actualizar');
+      // console.log(url);
+      return this.http.put(url, product).map((response: any) => {
+        console.log('Producto Actualizado');
+        console.log(response.result);
+        return response.result;
+      });
+    } else {
+      url += '?token=' + this._userService.token;
+
+      return this.http.post(url, product).map((response: any) => {
+        // console.log('Response al crear el producto:');
+        // console.log(response.result);
+        swal('Producto creado', product.name, 'success');
+        return response.result;
+      });
+    }
+
+  }
+
+  loadProductByID(id: string) {
+    // console.log('Entramos en el back-end');
+    let url = URL_SERVICES + '/products';
+    url += '?id=' + id;
+    url += '&token=' + this._userService.token;
+    // console.log('Url del back');
+    // console.log(url);
+    return this.http.get(url).map((response: any) => {
+
+      // console.log('Producto por id devuelto por el servicio');
+      // console.log(response.result.rows[0]);
+      return response.result.rows[0];
+    });
+  }
+
+  deleteProduct(id: string) {
+    let url = URL_SERVICES + '/products/' + id;
     url += '?token=' + this._userService.token;
-
-    console.log('La url es:');
-    console.log(url);
-    console.log('Producto recibido');
-    console.log( product );
-
-    return this.http.post(url, product).map((response: any) => {
-
-      console.log('La url es:');
-      console.log(url);
-      console.log('Respuesta al crear producto');
-      console.log( response );
-
-      return response;
-
-    }).catch( error => {
-      console.log('Error en profuct.services al crear producto');
-      console.log( error );
-      // const err = error.error.error.message;
-      // swal('Error en autenticacion', err, 'error');
-      return Observable.throw(error);
+    return this.http.delete(url).map(response => {
+      swal(
+        'Doctor borrado',
+        'El doctor ha sido eliminado correctamente',
+        'success'
+      );
+      return true;
     });
   }
 

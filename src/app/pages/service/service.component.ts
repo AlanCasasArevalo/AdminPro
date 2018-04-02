@@ -3,6 +3,7 @@ import { Service } from '../../models/service.model';
 import { ServicesService } from '../../services/services/services.service';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { UserService } from '../../services/service.index';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-service',
@@ -15,46 +16,54 @@ export class ServiceComponent implements OnInit {
 
   constructor(
     public _servicesService: ServicesService,
-    public _userService: UserService
-  ) { }
+    public _userService: UserService,
+    public router: Router,
+    public activateRoute: ActivatedRoute,
+  ) { 
+    activateRoute.params.subscribe( params => {
+      // console.log('Parametros recibidos ID del service');
+      // console.log( params );
+      const id = params['id'];
+      if (id !== 'new') {
+        this.loadServiceByID( id );
+      }
+    });
+  }
 
   ngOnInit() {
   }
 
-  createNewService( form: NgForm ) {
-
-    // console.log('Pasamos por el crear nuevo servicio');
-    // let isActive = true;
-
+  createNewAndUpdateService ( form: NgForm ) {
     if (form.invalid) {
       console.log('El formulario es invalido');
       console.log(form);
       return;
     }
 
-    // if (this.areActive[0] === 'no') {
-    //   isActive = false;
-    // } else {
-    //   isActive = true;
-    // }
+    // console.log('El Service es:');
+    // console.log( this.Service );
+    this._servicesService.createOrUploadService(this.service)
+        .subscribe( (service: any) => {
+          console.log('La respuesta del servidor al crear el service es');
+          console.log(service);
+          this.service._id = service._id;
 
-    console.log(`El formulario es: ${form.valid}`);
-    console.log(form.value);
-    console.log(form.value.price);
-    console.log(form.value.name);
-    console.log(form.value.description);
+          console.log('El id del Service es');
+          console.log(service._id);
 
-    this.service.professional = this._userService.user._id;
-    this.service.name = form.value.name;
-    this.service.description = form.value.description;
-    this.service.price = form.value.price;
+          this.router.navigate(['/service', service._id]);
 
-    console.log('El servicio es:');
-    console.log( this.service );
-    this._servicesService.createNewService(this.service)
-        .subscribe( (response: any) => {
-          console.log('La respuesta del servidor al crear el servicio es');
-          console.log(response);
+        });
+
+  }
+
+  loadServiceByID(id: string) {
+    // console.log('Service en component.ts Service');
+    this._servicesService.loadServiceByID( id )
+        .subscribe( service => {
+          // console.log('Service devuelto desde el servidor');
+          // console.log(Service);
+          this.service = service;
         });
   }
 

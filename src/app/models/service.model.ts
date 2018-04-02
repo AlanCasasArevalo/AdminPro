@@ -6,5 +6,6 @@ export class Service {
         public description?: string,
         public price?: number,
         // public isActive?: boolean
+        public _id?: string
     ) { }
 }

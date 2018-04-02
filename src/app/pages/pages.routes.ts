@@ -17,12 +17,14 @@ import { ProductComponent } from './product/product.component';
 
 const pagesRoutes: Routes = [
 
-        {
-            path : 'dashboard',
-            component : DashboardComponent,
-            canActivate: [ TokenVerifivationGuard ],
-            data: { title: 'Dashboard' }
-        },
+        // TODO:Hacer que funcione el TokenVerifivationGuard
+        // {
+        //     path : 'dashboard',
+        //     component : DashboardComponent,
+        //     canActivate: [ TokenVerifivationGuard ],
+        //     data: { title: 'Dashboard' }
+        // },
+        { path : 'dashboard', component : DashboardComponent, data: { title: 'Dashboard' } },
         { path : 'account-settings', component : AccountSettingsComponent, data: { title: 'Configuracion temas' } },
         { path : 'profile', component : ProfileComponent, data: { title: 'Perfil de usuario' } },
         // Maintenance
@@ -33,13 +35,13 @@ const pagesRoutes: Routes = [
             data: { title: 'Mantenimiento de usuarios' }
         },
         { path: 'products', component: ProductsComponent, data : {title: 'Productos'}},
-        { path: 'product', component: ProductComponent, data : {title: 'Producto'}},
+        { path: 'product/:id', component: ProductComponent, data : {title: 'Producto'}},
         { path: 'services', component: ServicesComponent, data : {title: 'Services'}},
-        { path: 'service', component: ServiceComponent, data : {title: 'Service'}},
+        { path: 'service/:id', component: ServiceComponent, data : {title: 'Service'}},
         { path: 'blogs', component: BlogsComponent, data : {title: 'Blogs'}},
-        { path: 'blog', component: BlogsComponent, data : {title: 'Blog'}},
+        { path: 'blog/:id', component: BlogsComponent, data : {title: 'Blog'}},
         { path: 'appointments', component: AppointmentsComponent, data : {title: 'Citas'}},
-        { path: 'appointment', component: AppointmentsComponent, data : {title: 'Cita'}},
+        { path: 'appointment/:id', component: AppointmentsComponent, data : {title: 'Cita'}},
         { path : '', redirectTo: 'dashboard', pathMatch: 'full'}
 
 ];

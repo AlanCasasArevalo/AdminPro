@@ -4,7 +4,7 @@
             <h1 class="box-title m-b-0"> Crear nuevo producto:</h1>
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
-                    <form #form="ngForm" ngNativeValidate (ngSubmit)="createNewProduct( form )">
+                    <form #form="ngForm" ngNativeValidate (ngSubmit)="createNewAndUpdateProduct( form )">
                         <div class="form-group">
                             <input [(ngModel)]="product.name" name="name" class="form-control" placeholder="Nombre" type="text" required>
                         </div>

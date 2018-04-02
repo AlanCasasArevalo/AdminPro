@@ -6,7 +6,6 @@ import { UserService } from '../user/user.service';
 @Injectable()
 export class TokenVerifivationGuard implements CanActivate {
 
-
   constructor(
     public _userService: UserService,
     public router: Router
@@ -15,11 +14,14 @@ export class TokenVerifivationGuard implements CanActivate {
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     console.log('Verificacion de Token');
 
+        // TODO:Hacer que funcione el TokenVerifivationGuard
     const token = this._userService.token;
+    console.log('Token en TokenVerificationGuards');
+    console.log(token);
+    console.log('Payload en TokenVerificationGuards');
     const payload = JSON.parse( atob(token.split('.')[1]));
-
-    // console.log(payload);
-    // console.log(payload.exp);
+    console.log(payload);
+    console.log(payload.exp);
 
     const expired = this.expired ( payload.exp );
 

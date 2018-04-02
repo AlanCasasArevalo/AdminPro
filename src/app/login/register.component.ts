@@ -95,9 +95,9 @@ export class RegisterComponent implements OnInit {
 
     this._userService.createNewUser( user )
         .subscribe( response => {
-          // console.log('Respuesta al crear user en register component');
-          // console.log( response );
-          // console.log( user );
+          console.log('Respuesta al crear user en register component');
+          console.log( response );
+          console.log( user );
           this._router.navigate(['/login']);
         });
   }

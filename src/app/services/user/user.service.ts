@@ -26,7 +26,7 @@ export class UserService {
   }
 
   authenticated() {
-    // console.log('Token en authenticated');
+    // console.log('Token del user en authenticated');
     // console.log(this.token);
     return this.token.length > 5 ? true : false;
   }
@@ -53,7 +53,6 @@ export class UserService {
     localStorage.removeItem('menu');
     this.router.navigate(['/login']);
   }
-
 
   tokenRenew() {
     let url = URL_SERVICES + '/login/tokenRenew';
@@ -98,19 +97,23 @@ export class UserService {
     const url = URL_SERVICES + '/login';
     return this.http.post(url, user).map((response: any) => {
       console.log(url);
-      // console.log(response.token);
-      console.log('Respuesta en el login response');
+      console.log('Respuesta en el login RESPONSE');
+      console.log( response );
+      console.log('Respuesta en el login USER');
       console.log( response.user );
+      console.log('Respuesta en el login response TOKEN');
+      console.log(response.token);
+      //   saveUserIntoStorage(id: string, token: string, user: User, menu: any) {
       this.saveUserIntoStorage(response.user._id, response.token, response.user, response.menu);
       return true;
     }).catch( error => {
-      // console.log(error);
+      console.log(error);
 
-      const err = error.error.error.message;
-      // console.log('Error en Login');
-      // console.log(err);
+      // const err = error.error.error.message;
+      // // console.log('Error en Login');
+      // // console.log(err);
 
-      swal('Error en autenticacion', err, 'error');
+      // swal('Error en autenticacion', err, 'error');
 
       return Observable.throw(error);
     });
@@ -118,8 +121,8 @@ export class UserService {
 
   createNewUser(user: User) {
     const url = URL_SERVICES + '/register';
-    // console.log('La url es:');
-    // console.log(url);
+    console.log('La url es:');
+    console.log(url);
 
     return this.http.post(url, user).map((response: any) => {
       // console.log('La url es:');
@@ -131,39 +134,50 @@ export class UserService {
       return response.user;
 
     }).catch( error => {
-      // console.log( error );
+      console.log( error );
       // console.log( error.error.error.message );
-      const err = error.error.error.message;
+      // const err = error.error.error.message;
 
-      swal('Error en autenticacion', err, 'error');
+      // swal('Error en autenticacion', err, 'error');
 
       return Observable.throw(error);
     });
   }
 
-  updateUser(user: User) {
-    let url = URL_SERVICES + '/users/' + user._id;
+  updateUser(userToUpdate: User) {
+    // http://localhost:3000/apiv1/users/5abfb66045e5b30975958b29
+    let url = URL_SERVICES + '/users/' + userToUpdate._id;
     url += '?token=' + this.token;
 
     console.log('URL para actualizar los usuarios por id');
     console.log( url );
-    return this.http.put(url, user).map((response: any) => {
+    console.log('User para actualizar');
+    console.log( userToUpdate );
 
-      if ( user._id === this.user._id) {
-        const userDB: User = response.user;
+    return this.http.put(url, userToUpdate).map((response: any) => {
+
+      // console.log('Respuesta de user a actualizar');
+      // console.log(response.result);
+
+      if ( userToUpdate._id === this.user._id) {
+        console.log('Resultado de actualizar');
+        console.log(response.result);
+        const userDB: User = response.result;
         this.saveUserIntoStorage(userDB._id, this.token, userDB, this.menu);
       }
 
-      swal('Usuario actualizado correctamente', user.name, 'success');
+      swal('Usuario actualizado correctamente', userToUpdate.name, 'success');
 
       return true;
-    }).catch( error => {
 
+    }).catch( error => {
       console.log('Error al Actualizar');
       console.log(error);
-      console.log(error.message);
 
-      swal('Error en autenticacion', error.error.errors.message, 'error');
+      // const err = error.error.error.message;
+      // console.log(err);
+
+      // swal('Error en autenticacion', err, 'error');
 
       return Observable.throw(error);
     });
@@ -197,10 +211,13 @@ export class UserService {
   }
 
   deleteUserFromService(id: string) {
+    // let url = URL_SERVICES + '/users/';
+    // tslint:disable-next-line:max-line-length
+/*http://localhost:3000/apiv1/users/5ac081809f349207942ba6c2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7Il9pZCI6IjVhYzA4MTBjOWYzNDkyMDc5NDJiYTZjMCIsIm5hbWUiOiJhbGFuIiwiZW1haWwiOiJkaW9zQHRlc3QuY29tIiwicGFzc3dvcmQiOiI4ZDk2OWVlZjZlY2FkM2MyOWEzYTYyOTI4MGU2ODZjZjBjM2Y1ZDVhODZhZmYzY2ExMjAyMGM5MjNhZGM2YzkyIiwiaW1nIjoiIiwiX192IjowLCJkZWxldGVkIjpmYWxzZSwiaXNQcm9mZXNzaW9uYWwiOnRydWV9LCJpYXQiOjE1MjI1NjUzOTQsImV4cCI6MTUyMjczODE5NH0.UJj9MsnckNDDULijeB6AuJ0JeBk5_YbK7ZFothfzzDo?email=dios@test.com?password=%F0%9F%A4%94%20%F0%9F%91%BB%20%F0%9F%98%9C*/ 
     let url = URL_SERVICES + '/users/' + id;
     url += '?token=' + this.token;
-    url += '?email=' + this.user.email;
-    url += '?password=' + this.user.password;
+    // url += '?email=' + this.user.email;
+    // url += '?password=' + this.user.password;
     return this.http.delete ( url ).map( (response: any) => {
       console.log('Usuario a borrar');
       console.log(response);

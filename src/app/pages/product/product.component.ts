@@ -16,44 +16,55 @@ export class ProductComponent implements OnInit {
 
   constructor(
     public _productsService: ProductsService,
-    public _userServices: UserService
-  ) { }
+    public _userServices: UserService,
+    public router: Router,
+    public activateRoute: ActivatedRoute,
+  ) {
+    activateRoute.params.subscribe( params => {
+      // console.log('Parametros recibidos ID del producto');
+      // console.log( params );
+      const id = params['id'];
+      if (id !== 'new') {
+        this.loadProductByID( id );
+      }
+    });
+  }
 
   ngOnInit() {
   }
 
-  createNewProduct ( form: NgForm ) {
+  createNewAndUpdateProduct ( form: NgForm ) {
     if (form.invalid) {
       console.log('El formulario es invalido');
       console.log(form);
       return;
     }
 
-    // if (this.areActive[0] === 'no') {
-    //   isActive = false;
-    // } else {
-    //   isActive = true;
-    // }
+    // console.log('El producto es:');
+    // console.log( this.product );
+    this._productsService.createOrUploadProduct(this.product)
+        .subscribe( (product: any) => {
+          console.log('La respuesta del servidor al crear el producto es');
+          console.log(product);
+          this.product._id = product._id;
 
-    console.log(`El formulario es: ${form.valid}`);
-    console.log(form.value);
-    console.log(form.value.price);
-    console.log(form.value.name);
-    console.log(form.value.description);
+          console.log('El id del producto es');
+          console.log(product._id);
 
-    this.product.professional = this._userServices.user._id;
-    this.product.name = form.value.name;
-    this.product.description = form.value.description;
-    this.product.price = form.value.price;
+          this.router.navigate(['/product', product._id]);
 
-    console.log('El producto es:');
-    console.log( this.product );
-    this._productsService.createNewProduct(this.product)
-        .subscribe( (response: any) => {
-          console.log('La respuesta del servidor al crear el servicio es');
-          console.log(response);
         });
 
+  }
+
+  loadProductByID(id: string) {
+    // console.log('ProductID en component.ts loadProductByID');
+    this._productsService.loadProductByID( id )
+        .subscribe( product => {
+          // console.log('Producto devuelto desde el servidor');
+          // console.log(product);
+          this.product = product;
+        });
   }
 
 }
