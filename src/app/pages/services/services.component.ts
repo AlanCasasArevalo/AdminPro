@@ -49,12 +49,40 @@ export class ServicesComponent implements OnInit {
     this._modalUploadService.toShowModal( 'services', serviceID );
   }
 
-
-  updateService(service: Service ) {
-
-  }
-
   serviceToDelete (service: Service ) {
 
+    swal({
+      title: '¿Seguro que quieres borrar?',
+      text: `Vas a borrar ${ service.name }` ,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'No, cancelar!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this._servicesService.deleteService(service._id)
+        .subscribe( deleted => {
+          swal('Borrado', `${service.name} ha sido borrado`, 'success');
+          console.log('Al borrar:');
+          console.log( deleted );
+          this.loadServices();
+        });
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelado',
+          'Tu servicio esta a salvo 😊',
+          'error'
+        );
+      }
+    });
   }
 }

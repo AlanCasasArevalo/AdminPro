@@ -44,12 +44,12 @@ export class ProductComponent implements OnInit {
     // console.log( this.product );
     this._productsService.createOrUploadProduct(this.product)
         .subscribe( (product: any) => {
-          console.log('La respuesta del servidor al crear el producto es');
-          console.log(product);
+          // console.log('La respuesta del servidor al crear el producto es');
+          // console.log(product);
           this.product._id = product._id;
 
-          console.log('El id del producto es');
-          console.log(product._id);
+          // console.log('El id del producto es');
+          // console.log(product._id);
 
           this.router.navigate(['/product', product._id]);
 

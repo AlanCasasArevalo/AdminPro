@@ -17,7 +17,7 @@ import { UserService } from '../../services/user/user.service';
   styles: []
 })
 export class ProductsComponent implements OnInit {
-  
+
   products: Product[] = [];
   loading: boolean = true;
   totalProducts: number = 0;
@@ -41,8 +41,8 @@ export class ProductsComponent implements OnInit {
     this._productsService
       .loadProductsFromServer()
       .subscribe((response: any) => {
-        // console.log('Respuesta al recibir los productos desde el servidor');
-        // console.log(response.result.rows);
+        console.log('Respuesta al recibir los productos desde el servidor');
+        console.log(response.result.rows);
         this.totalProducts = response.result.rows.length;
         this.products = response.result.rows;
         this.loading = false;
@@ -54,8 +54,40 @@ export class ProductsComponent implements OnInit {
     this._modalUploadService.toShowModal('products', productID);
   }
 
-  productToDelete(product) {
-    this._productsService.deleteProduct( product._id )
-    .subscribe(() => this.loadProducts());
+  productToDelete( product ) {
+
+    swal({
+      title: '¿Seguro que quieres borrar?',
+      text: `Vas a borrar ${ product.name }` ,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'No, cancelar!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this._productsService.deleteProduct(product._id)
+        .subscribe( deleted => {
+          swal('Borrado', `${product.name} ha sido borrado`, 'success');
+          console.log('Al borrar:');
+          console.log( deleted );
+          this.loadProducts();
+        });
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelado',
+          'Tu servicio esta a salvo 😊',
+          'error'
+        );
+      }
+    });
   }
 }

@@ -44,12 +44,12 @@ export class ServiceComponent implements OnInit {
     // console.log( this.Service );
     this._servicesService.createOrUploadService(this.service)
         .subscribe( (service: any) => {
-          console.log('La respuesta del servidor al crear el service es');
-          console.log(service);
+          // console.log('La respuesta del servidor al crear el service es');
+          // console.log(service);
           this.service._id = service._id;
 
-          console.log('El id del Service es');
-          console.log(service._id);
+          // console.log('El id del Service es');
+          // console.log(service._id);
 
           this.router.navigate(['/service', service._id]);
 

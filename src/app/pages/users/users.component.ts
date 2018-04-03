@@ -82,28 +82,41 @@ export class UsersComponent implements OnInit {
     }
 
     swal({
-      title: `¿Seguro que quieres borrar al usuario ${ userToDelete.name }?`,
-      text: 'No podras revertir los cambios',
+      title: '¿Seguro que quieres borrar?',
+      text: `Vas a borrar ${ userToDelete.name }` ,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrar'
-    }).then( willDelete  => {
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'No, cancelar!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+
+    }).then((result) => {
       // console.log(willDelete);
-      if ( willDelete ) {
+      if (result.value) {
         console.log('El objeto a borrar es:');
         console.log(userToDelete);
         // console.log(willDelete);
-        this._userService.deleteUserFromService(userToDelete._id)
+        this._userService.deleteUserFromServer(userToDelete._id)
         .subscribe( deleted => {
-          swal('Borrado', 'Ese usuario ha sido borrado', 'success');
+          swal('Borrado', `${userToDelete.name} ha sido borrado`, 'success');
           console.log('Al borrar:');
           console.log( deleted );
           this.loadUsers();
         });
+      } else if (
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelado',
+          'Tu producto no ha sido borrado 😊',
+          'error'
+        );
       }
-
     });
   }
 

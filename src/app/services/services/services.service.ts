@@ -4,6 +4,7 @@ import { URL_SERVICES } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
+import { Service } from '../../models/service.model';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -11,11 +12,7 @@ import 'rxjs/add/observable/throw';
 
 import { Observable } from 'rxjs/Observable';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-import { Service } from '../../models/service.model';
-const swal: SweetAlert = _swal as any;
-
+import swal from 'sweetalert2';
 @Injectable()
 export class ServicesService {
 
@@ -57,6 +54,16 @@ export class ServicesService {
         // console.log(response.result);
         swal('service creado', service.name, 'success');
         return response.result;
+      }).catch( error => {
+        const err0 = error.error.error.err.errors[0].message;
+        const err1 = error.error.error.err.errors[1].message;
+        console.log('Error en crear el usuario');
+        // console.log(error.status);
+        console.log(error.error.error.err.errors);
+
+        swal('Error en creacion o actualizacion', `Los sentimos ${err0} o ${err1}`, 'error');
+
+        return Observable.throw(error);
       });
     }
 
@@ -80,14 +87,23 @@ export class ServicesService {
   deleteService(id: string) {
     let url = URL_SERVICES + '/services/' + id;
     url += '?token=' + this._userService.token;
+    console.log('La url para borrar servicios es:');
+    console.log(url);
     return this.http.delete(url).map(response => {
       swal(
         'Servicio borrado',
-        'El doctor ha sido eliminado correctamente',
+        'El servicio ha sido eliminado correctamente',
         'success'
       );
       return true;
-    });
+    }).catch ( error => {
+      const err = error.error.error.message;
+      console.log('Error al borrar el servicio');
+      console.log(error.error.error.message);
+      swal('No se borro', `Lo sentimos, ${err}`, 'error');
+
+      return Observable.throw(error);
+     });
   }
 
 }

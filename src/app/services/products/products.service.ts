@@ -12,10 +12,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-// const swal: SweetAlert = _swal as any;
-declare var swal: SweetAlert;
+import swal from 'sweetalert2';
 
 @Injectable()
 export class ProductsService {
@@ -58,6 +55,16 @@ export class ProductsService {
         // console.log(response.result);
         swal('Producto creado', product.name, 'success');
         return response.result;
+      }).catch( error => {
+        const err0 = error.error.error.err.errors[0].message;
+        const err1 = error.error.error.err.errors[1].message;
+        console.log('Error en crear el usuario');
+        // console.log(error.status);
+        console.log(error.error.error.err.errors);
+
+        swal('Error en creacion o actualizacion', `Los sentimos ${err0} o ${err1}`, 'error');
+
+        return Observable.throw(error);
       });
     }
 
@@ -81,14 +88,23 @@ export class ProductsService {
   deleteProduct(id: string) {
     let url = URL_SERVICES + '/products/' + id;
     url += '?token=' + this._userService.token;
+    console.log('La url para borrar productos es:');
+    console.log(url);
     return this.http.delete(url).map(response => {
       swal(
-        'Doctor borrado',
-        'El doctor ha sido eliminado correctamente',
+        'Producto borrado',
+        'El producto ha sido eliminado correctamente',
         'success'
       );
       return true;
-    });
+    }).catch ( error => {
+      const err = error.error.error.message;
+      // console.log('Error al borrar el producto');
+      // console.log(error.error.error.message);
+      swal('No se borro', `Lo sentimos, ${err}`, 'error');
+
+      return Observable.throw(error);
+     });
   }
 
 }

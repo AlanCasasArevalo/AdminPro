@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../services/service.index';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
-
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+
+import swal from 'sweetalert2';
 
 declare function init_plugins();
 
@@ -96,8 +94,9 @@ export class RegisterComponent implements OnInit {
     this._userService.createNewUser( user )
         .subscribe( response => {
           console.log('Respuesta al crear user en register component');
-          console.log( response );
+          // console.log( response );
           console.log( user );
+          swal('Registro OK', `El usuario ${user.name} ha sido creado satisfactoriamente`, 'success');
           this._router.navigate(['/login']);
         });
   }

@@ -177,7 +177,7 @@ export class UserService {
       // const err = error.error.error.message;
       // console.log(err);
 
-      // swal('Error en autenticacion', err, 'error');
+      swal('Error al actualizar', `${error}`, 'error');
 
       return Observable.throw(error);
     });
@@ -210,7 +210,7 @@ export class UserService {
       .map( (response: any) => response.users);
   }
 
-  deleteUserFromService(id: string) {
+  deleteUserFromServer(id: string) {
     // let url = URL_SERVICES + '/users/';
     // tslint:disable-next-line:max-line-length
 /*http://localhost:3000/apiv1/users/5ac081809f349207942ba6c2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7Il9pZCI6IjVhYzA4MTBjOWYzNDkyMDc5NDJiYTZjMCIsIm5hbWUiOiJhbGFuIiwiZW1haWwiOiJkaW9zQHRlc3QuY29tIiwicGFzc3dvcmQiOiI4ZDk2OWVlZjZlY2FkM2MyOWEzYTYyOTI4MGU2ODZjZjBjM2Y1ZDVhODZhZmYzY2ExMjAyMGM5MjNhZGM2YzkyIiwiaW1nIjoiIiwiX192IjowLCJkZWxldGVkIjpmYWxzZSwiaXNQcm9mZXNzaW9uYWwiOnRydWV9LCJpYXQiOjE1MjI1NjUzOTQsImV4cCI6MTUyMjczODE5NH0.UJj9MsnckNDDULijeB6AuJ0JeBk5_YbK7ZFothfzzDo?email=dios@test.com?password=%F0%9F%A4%94%20%F0%9F%91%BB%20%F0%9F%98%9C*/ 
@@ -223,6 +223,16 @@ export class UserService {
       console.log(response);
       swal('Usuario borrado', 'El usuario ha sido eliminado correctamente', 'success');
       return true;
+    }).catch( error => {
+      console.log('Error al Borrar');
+      console.log(error);
+
+      // const err = error.error.error.message;
+      // console.log(err);
+
+      swal('Error al borrar', `${error}`, 'error');
+
+      return Observable.throw(error);
     });
   }
 
