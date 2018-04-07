@@ -33,8 +33,8 @@ export class ServicesService {
   }
 
   createOrUploadService( service: Service ) {
-    console.log('service para actualizar');
-    console.log(service);
+    // console.log('service para actualizar');
+    // console.log(service);
     let url = URL_SERVICES + '/services';
     if (service._id) {
       url += '/' + service._id;
@@ -42,8 +42,8 @@ export class ServicesService {
       // console.log('URL Para actualizar');
       // console.log(url);
       return this.http.put(url, service).map((response: any) => {
-        console.log('service Actualizado');
-        console.log(response.result);
+        // console.log('service Actualizado');
+        // console.log(response.result);
         return response.result;
       });
     } else {
@@ -57,9 +57,9 @@ export class ServicesService {
       }).catch( error => {
         const err0 = error.error.error.err.errors[0].message;
         const err1 = error.error.error.err.errors[1].message;
-        console.log('Error en crear el usuario');
+        // console.log('Error en crear el usuario');
         // console.log(error.status);
-        console.log(error.error.error.err.errors);
+        // console.log(error.error.error.err.errors);
 
         swal('Error en creacion o actualizacion', `Los sentimos ${err0} o ${err1}`, 'error');
 
@@ -87,8 +87,8 @@ export class ServicesService {
   deleteService(id: string) {
     let url = URL_SERVICES + '/services/' + id;
     url += '?token=' + this._userService.token;
-    console.log('La url para borrar servicios es:');
-    console.log(url);
+    // console.log('La url para borrar servicios es:');
+    // console.log(url);
     return this.http.delete(url).map(response => {
       swal(
         'Servicio borrado',
@@ -98,8 +98,8 @@ export class ServicesService {
       return true;
     }).catch ( error => {
       const err = error.error.error.message;
-      console.log('Error al borrar el servicio');
-      console.log(error.error.error.message);
+      // console.log('Error al borrar el servicio');
+      // console.log(error.error.error.message);
       swal('No se borro', `Lo sentimos, ${err}`, 'error');
 
       return Observable.throw(error);

@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit {
 
   loadProductByID(id: string) {
     // console.log('ProductID en component.ts loadProductByID');
-    this._productsService.loadProductByID( id )
+    this._productsService.loadProductByID( id )/*?.*/
         .subscribe( product => {
           // console.log('Producto devuelto desde el servidor');
           // console.log(product);

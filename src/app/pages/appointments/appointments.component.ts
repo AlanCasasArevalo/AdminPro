@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Appoitment } from '../../models/appoitment.model';
-
 import { AppointmentsService } from '../../services/appointments/appointments.service';
 import { UserService } from '../../services/user/user.service';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 import swal from 'sweetalert2';
+import { Appointment } from '../../models/appointment.model';
 
 @Component({
   selector: 'app-appointments',
@@ -14,31 +13,83 @@ import swal from 'sweetalert2';
   styles: []
 })
 export class AppointmentsComponent implements OnInit {
-
-  appoitments: Appoitment[] = [];
+  appointments: Appointment[] = [];
   loading: boolean = true;
-  totalAppoitments: number = 0;
+  totalAppointments: number = 0;
 
   constructor(
-    public _appoitmentsServices: AppointmentsService,
+    public _appointmentsServices: AppointmentsService,
     public _userServices: UserService,
     public _modalUploadService: ModalUploadService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.loadAppoitments();
+    this.loadAppointments();
+    this._modalUploadService.notification.subscribe((response: any) => {
+      this.loadAppointments();
+    });
   }
 
-  loadAppoitments() {
+  loadAppointments() {
     this.loading = true;
-    this._appoitmentsServices.loadAppoitmentsFromServer()
-        .subscribe( (response: any) => {
+
+    if (this._userServices.user.isProfessional) {
+      this._appointmentsServices
+        .loadProfessionalAppointmentsFromServer()
+        .subscribe((response: any) => {
           console.log('Respuesta al recibir las citas desde el servidor');
           console.log(response);
-          this.totalAppoitments = response.result.rows.length;
-          this.appoitments = response.result.rows;
+          this.totalAppointments = response.result.rows.length;
+          this.appointments = response.result.rows;
           this.loading = false;
         });
       }
+      this._appointmentsServices
+        .loadCustomerAppointmentsFromServer()
+        .subscribe((response: any) => {
+          console.log('Respuesta al recibir las citas desde el servidor');
+          console.log(response);
+          this.totalAppointments = response.result.rows.length;
+          this.appointments = response.result.rows;
+          this.loading = false;
+        });
 
+  }
+
+  toShowModal(appointmentID: string) {
+    this._modalUploadService.toShowModal('appointment', appointmentID);
+  }
+
+  appointmentToDelete(appointment: Appointment) {
+    swal({
+      title: '¿Seguro que quieres borrar?',
+      text: `Vas a borrar ${appointment}`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'No, cancelar!',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then(result => {
+      if (result.value) {
+        this._appointmentsServices
+          .deleteService(appointment._id)
+          .subscribe(deleted => {
+            // swal('Borrado', `${appointment.name} ha sido borrado`, 'success');
+            console.log('Al borrar:');
+            console.log(deleted);
+            this.loadAppointments();
+          });
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal('Cancelado', 'Tu servicio esta a salvo 😊', 'error');
+      }
+    });
+  }
 }

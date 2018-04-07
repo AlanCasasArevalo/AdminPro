@@ -25,6 +25,8 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blog/blog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatepickerComponent } from './datepicker/datepicker.component';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { BlogComponent } from './blog/blog.component';
     AppointmentComponent,
     BlogsComponent,
     BlogComponent,
+    DatepickerComponent,
   ],
   imports: [
     SharedModule,
@@ -48,7 +51,8 @@ import { BlogComponent } from './blog/blog.component';
     FormsModule,
     ChartsModule,
     PipesModule,
-    CommonModule
+    CommonModule,
+    NgbModule.forRoot(),
   ],
   exports: [
     DashboardComponent,

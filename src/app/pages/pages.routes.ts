@@ -14,6 +14,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { ServicesComponent } from './services/services.component';
 import { ServiceComponent } from './service/service.component';
 import { ProductComponent } from './product/product.component';
+import { AppointmentComponent } from './appointment/appointment.component';
 
 const pagesRoutes: Routes = [
 
@@ -41,7 +42,7 @@ const pagesRoutes: Routes = [
         { path: 'blogs', component: BlogsComponent, data : {title: 'Blogs'}},
         { path: 'blog/:id', component: BlogsComponent, data : {title: 'Blog'}},
         { path: 'appointments', component: AppointmentsComponent, data : {title: 'Citas'}},
-        { path: 'appointment/:id', component: AppointmentsComponent, data : {title: 'Cita'}},
+        { path: 'appointment/:id', component: AppointmentComponent, data : {title: 'Cita'}},
         { path : '', redirectTo: 'dashboard', pathMatch: 'full'}
 
 ];

@@ -25,52 +25,51 @@
         <div class="card">
             <div class="card-body">
 
-                <!-- <div *ngIf="_userServices.user.isProfessional" class="text-right">
-                    <button (click)="createNewService()" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
-                      <i class="fa fa_plus">Crear servicio nuevo</i>
-                  </button>
-                </div> -->
+                <div *ngIf="!_userServices.user.isProfessional" class="text-right">
+                    <button [routerLink]="['/appointment', 'new']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                        <i class="fa fa_plus">Crear nueva cita nuevo</i>
+                    </button>
+                </div>
 
-                <h3 class="card-title"> Citas resgistradas ( <small> {{ totalAppoitments }} </small> ) </h3>
+                <h3 class="card-title"> Citas resgistradas ( <small> {{ totalAppointments }} </small> ) </h3>
 
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th> Cliente </th>
-                            <th> Servicio </th>
-                            <th> Precio </th>
-                            <th> ¿Confirmado? </th>
                             <th> Direccion </th>
+                            <th> Fecha </th>
+                            <th> Informacion adicional </th>
+                            <!-- <th> ¿Esta disponible? </th> -->
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let appoitment of appoitments">
-                            <!-- <td> {{ appoitment.user.name }} </td>
-                            <td> {{ appoitment.description }} </td>
-                            <td> {{ appoitment.price }} </td>
-                            <td> {{ appoitment.isConfirmed }} </td> -->
-                            <!-- <td *ngIf="_userServices.user.isProfessional">
-                                <button (click)="updateService( service )" class="btn btn-primary">
-                              <i class="fa fa-save"></i>
-                            </button>
+                        <tr *ngFor="let appointment of appointments">
+                            <td> {{ appointment.address }} </td>
+                            <td> {{ appointment.date }} </td>
+                            <td> {{ appointment.extraInfo }} </td>
+                            <!-- <td> {{ appointment.isActive }} </td> -->
+                            <td>
+                                <button [routerLink]="['/appointment', appointment._id]" class="btn btn-primary">
+                                    <i class="fa fa-edit"></i>
+                                </button>
 
-                                <button (click)="serviceToDelete( service )" class="btn btn-danger">
-                              <i class="fa fa-trash-o"></i>
-                            </button>
-                            </td> -->
+                                <button (click)="appointmentToDelete( appointment )" class="btn btn-danger">
+                                <i class="fa fa-trash-o"></i>
+                              </button>
+                            </td>
                         </tr>
                     </tbody>
 
                 </table>
 
                 <!-- <button *ngIf="from>0" (click)="changeFrom(-5)" class="btn btn-secondary">
-              Anteriores
-            </button>
+                Anteriores
+              </button>
 
-              <button *ngIf="from+5<=totalUsers" (click)="changeFrom(5)" class="btn btn-secondary">
-              Siguientes
-            </button> -->
+                <button *ngIf="from+5<=totalUsers" (click)="changeFrom(5)" class="btn btn-secondary">
+                Siguientes
+              </button> -->
 
             </div>
         </div>
