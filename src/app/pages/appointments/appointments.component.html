@@ -46,7 +46,7 @@
                     <tbody>
                         <tr *ngFor="let appointment of appointments">
                             <td> {{ appointment.address }} </td>
-                            <td> {{ appointment.date }} </td>
+                            <td> {{ appointment.date | date: 'dd-MMM-yyyy'}} </td>
                             <td> {{ appointment.extraInfo }} </td>
                             <!-- <td> {{ appointment.isActive }} </td> -->
                             <td>
