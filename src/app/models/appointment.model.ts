@@ -6,7 +6,7 @@ export class Appointment {
         public service?: string,
         public customer?: string,
         public professional?: string,
-        public date?: Date,
+        public date?: string,
         public address?: string,
         public extraInfo?: string,
         public isCancelled?: boolean,

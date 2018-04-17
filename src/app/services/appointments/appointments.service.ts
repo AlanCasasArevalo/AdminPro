@@ -84,12 +84,9 @@ export class AppointmentsService {
         return response.result;
 
       }).catch( error => {
-        // console.log('Error en crear la cita');
-        // console.log(error.error.error.err.errors[0].message);
-        // console.log('Error en crear mensaje');
-        // console.log(error.error.error.err.errors);
-        const err = error.error.error.err.errors[0].message;
-        // const err = error.error.error.url;
+        console.log('Error en crear la cita');
+        console.log(error.error.error.err.message); /*?.error*/
+        const err = error.error.error.err.message;
         swal('Error en creacion o actualizacion', `Los sentimos ${err}`, 'error');
 
         return Observable.throw(error);

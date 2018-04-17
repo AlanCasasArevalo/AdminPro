@@ -1,3 +1,4 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 #themecolors a {
     cursor: pointer
 }
@@ -30,4 +31,15 @@
 
 .hide {
     display: none;
+}
+
+
+/* Material */
+
+body {
+    padding: 20px;
+}
+
+pre {
+    margin-top: 20px;
 }

@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 // Our Modules
-import { SharedModule } from '../shared/shared.module';
-import { PAGES_ROUTES } from './pages.routes';
-import { PipesModule } from '../pipes/pipes.module';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from "../shared/shared.module";
+import { PAGES_ROUTES } from "./pages.routes";
+import { PipesModule } from "../pipes/pipes.module";
+import { CommonModule } from "@angular/common";
 
 // ng2-charts
 import { ChartsModule } from 'ng2-charts';
@@ -25,9 +25,10 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blog/blog.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 
+// Material
+import { MatNativeDateModule, MatInputModule, MatFormFieldModule, MatDatepickerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     AppointmentComponent,
     BlogsComponent,
     BlogComponent,
-    DatepickerComponent,
+    DatepickerComponent
   ],
   imports: [
     SharedModule,
@@ -52,10 +53,13 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     ChartsModule,
     PipesModule,
     CommonModule,
-    NgbModule.forRoot(),
+
+    // Material
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule
   ],
-  exports: [
-    DashboardComponent,
-  ]
+  exports: [DashboardComponent]
 })
-export class PagesModule { }
+export class PagesModule {}

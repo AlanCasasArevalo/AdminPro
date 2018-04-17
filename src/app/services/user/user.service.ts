@@ -97,18 +97,19 @@ export class UserService {
 
     const url = URL_SERVICES + '/login';
     return this.http.post(url, user).map((response: any) => {
-      // console.log(url);
-      // console.log('Respuesta en el login RESPONSE');
-      // console.log( response );
-      // console.log('Respuesta en el login USER');
-      // console.log( response.user );
-      // console.log('Respuesta en el login response TOKEN');
-      // console.log(response.token);
-      //   saveUserIntoStorage(id: string, token: string, user: User, menu: any) {
-      this.saveUserIntoStorage(response.user._id, response.token, response.user, response.menu)/*?.*/;
+
+      console.log('Respuesta al Login');
+      console.log(response.result.token);
+      const userIDResponse = response.result.user._id;
+      const userTokenResponse = response.result.token;
+      const userResponse = response.result.user;
+      const menuResponse = response.result.menu;
+
+      this.saveUserIntoStorage(userIDResponse, userTokenResponse, userResponse, menuResponse)/*?.*/;
       return true;
     }).catch( error => {
-      // console.log(error);
+      console.log('Error en Login');
+      console.log(error);
 
       const err = error.error.error.message;
       // console.log('Error en Login');

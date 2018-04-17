@@ -12,6 +12,7 @@ import { Appointment } from '../../models/appointment.model';
   templateUrl: './appointments.component.html',
   styles: []
 })
+
 export class AppointmentsComponent implements OnInit {
   appointments: Appointment[] = [];
   loading: boolean = true;
@@ -37,13 +38,15 @@ export class AppointmentsComponent implements OnInit {
       this._appointmentsServices
         .loadProfessionalAppointmentsFromServer()
         .subscribe((response: any) => {
-          console.log('Respuesta al recibir las citas desde el servidor');
+          console.log(
+            'Respuesta al recibir las citas desde el servidor para profesionales'
+          );
           console.log(response);
           this.totalAppointments = response.result.rows.length;
           this.appointments = response.result.rows;
           this.loading = false;
         });
-      }
+    } else {
       this._appointmentsServices
         .loadCustomerAppointmentsFromServer()
         .subscribe((response: any) => {
@@ -53,7 +56,7 @@ export class AppointmentsComponent implements OnInit {
           this.appointments = response.result.rows;
           this.loading = false;
         });
-
+    }
   }
 
   toShowModal(appointmentID: string) {

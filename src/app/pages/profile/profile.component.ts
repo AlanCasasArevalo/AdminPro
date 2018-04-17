@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
     const temporalUrlImage = reader.readAsDataURL( file );
 
     reader.onloadend = () => {
-      console.log( reader.result );
+      // console.log( reader.result );
       this.temporalImage = reader.result;
     };
 

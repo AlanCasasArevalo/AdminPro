@@ -6,7 +6,7 @@
                 <div class="col-sm-12 col-xs-12">
                     <form #form="ngForm" ngNativeValidate (ngSubmit)="saveAppointment(form)">
 
-                        <app-datepicker></app-datepicker>
+                        <app-datepicker (dateSelected)="materialDatepickerSelected($event)"></app-datepicker>
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Direccion del cliente</label>

@@ -20,8 +20,8 @@ export class UploadFileService {
             console.log('Imagen subida');
             resolve( JSON.parse( ajaxResponse.response ));
           } else {
-            console.log('Fallo la subida');
-            console.log(ajaxResponse.response);
+            // console.log('Fallo la subida');
+            // console.log(ajaxResponse.response);
             reject( ajaxResponse.response );
           }
         }

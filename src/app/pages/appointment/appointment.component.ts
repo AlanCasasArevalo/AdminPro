@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { AppointmentsService } from '../../services/appointments/appointments.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Appointment } from '../../models/appointment.model';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-appointment',
@@ -20,6 +21,8 @@ export class AppointmentComponent implements OnInit {
   totalAppoitments: number = 0;
   service: Service = new Service('');
   appointment: Appointment = new Appointment();
+
+  materialDate;
 
   constructor(
     public _servicesService: ServicesService,
@@ -35,6 +38,11 @@ export class AppointmentComponent implements OnInit {
         this.loadAppointmentByID( id );
       }
     });
+  }
+
+
+  materialDatepickerSelected(date) {
+    this.materialDate = date;
   }
 
   ngOnInit() {
@@ -79,7 +87,7 @@ export class AppointmentComponent implements OnInit {
     }
 
     const date = new Date();
-    this.appointment.date = date;
+    this.appointment.date = this.materialDate;
     this.appointment.isCancelled = false;
     this.appointment.isConfirmed = false;
     this.appointment.customer = this._userServices.user._id;
