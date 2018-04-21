@@ -50,7 +50,7 @@ export class AppointmentsService {
     if (appointment._id) {
       url += '/';
       url += appointment._id;
-      url += '&token=' + this._userService.token;
+      url += '?token=' + this._userService.token;
       console.log('URL Para actualizar');
       console.log(url);
       console.log('appointment para actualizar');
