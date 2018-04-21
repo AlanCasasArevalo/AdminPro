@@ -1,25 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { Service } from '../../models/service.model';
-import { UserService } from '../../services/user/user.service';
-import { ServicesService } from '../../services/services/services.service';
-import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
-import { NgForm } from '@angular/forms';
-import { AppointmentsService } from '../../services/appointments/appointments.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Appointment } from '../../models/appointment.model';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from "@angular/core";
+import { Service } from "../../models/service.model";
+import { UserService } from "../../services/user/user.service";
+import { ServicesService } from "../../services/services/services.service";
+import { ModalUploadService } from "../../components/modal-upload/modal-upload.service";
+import { NgForm } from "@angular/forms";
+import { AppointmentsService } from "../../services/appointments/appointments.service";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Appointment } from "../../models/appointment.model";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { User } from "../../models/user.model";
 
 @Component({
-  selector: 'app-appointment',
-  templateUrl: './appointment.component.html',
+  selector: "app-appointment",
+  templateUrl: "./appointment.component.html",
   styles: []
 })
 export class AppointmentComponent implements OnInit {
-
   services: Service[] = [];
+  professionals: User[] = [];
+  professional: User = new User("", "", "");
   loading: boolean = true;
   totalAppoitments: number = 0;
-  service: Service = new Service('');
+  service: Service = new Service("");
   appointment: Appointment = new Appointment();
 
   materialDate;
@@ -30,51 +32,64 @@ export class AppointmentComponent implements OnInit {
     public _appointmentServices: AppointmentsService,
     public _modalUploadService: ModalUploadService,
     public _activateRoute: ActivatedRoute,
-    public router: Router,
+    public router: Router
   ) {
-    _activateRoute.params.subscribe( params => {
-      const id = params['id'];
-      if (id !== 'new') {
-        this.loadAppointmentByID( id );
+    _activateRoute.params.subscribe(params => {
+      const id = params["id"];
+      if (id !== "new") {
+        this.loadAppointmentByID(id);
       }
     });
   }
-
 
   materialDatepickerSelected(date) {
     this.materialDate = date;
   }
 
   ngOnInit() {
-    this._servicesService.loadServicesFromServer()
-        .subscribe( (response: any) => {
-          this.services = response.result.rows;
-          // console.log('Respuesta al pedir los servicios al servidor desde citas');
-          // console.log(this.services);
-        });
+    this._servicesService
+      .loadServicesFromServer()
+      .subscribe((response: any) => {
+        this.services = response.result.rows;
+        // console.log('Respuesta al pedir los servicios al servidor desde citas');
+        // console.log(this.services);
+      });
+
+    this._appointmentServices
+      .loadProfessionalsFromServer()
+      .subscribe((response: any) => {
+        // console.log(this.professionals);
+        this.professionals = response;
+      });
   }
 
-
-  serviceChanged( id: string ) {
+  serviceChanged(id: string) {
     // console.log('Id del servicio en citas');
     // console.log(id);
-    this._servicesService.loadServiceByID(id)
-        .subscribe( (service: any) => {
-          // console.log('Respuesta del servicio al pedir por ID');
-          // console.log(service);
-          this.service = service;
-        });
+    this._servicesService.loadServiceByID(id).subscribe((service: any) => {
+      // console.log('Respuesta del servicio al pedir por ID');
+      // console.log(service);
+      this.service = service;
+    });
   }
 
-  loadAppointmentByID ( id: string ) {
-    this._appointmentServices.loadAppointmentByID(id)
-        .subscribe( appointment => {
-          // console.log('Respuesta al pedir la cita por ID');
-          // console.log(appointment);
-          this.appointment = appointment;
-          this.appointment.service = appointment.service._id;
-          this.serviceChanged(this.appointment.service);
-        });
+  professionalChanged(id: string) {
+    this._appointmentServices
+      .loadProfessionalByID(id)
+      .subscribe((professional: any) => {
+        this.professional = professional;
+      });
+  }
+
+  loadAppointmentByID(id: string) {
+    this._appointmentServices.loadAppointmentByID(id).subscribe(appointment => {
+      // console.log('Respuesta al pedir la cita por ID');
+      // console.log(appointment);
+      this.appointment = appointment;
+      this.appointment.service = appointment.service._id;
+      this.serviceChanged(this.appointment.service);
+      this.professionalChanged(this.appointment.professional);
+    });
   }
 
   saveAppointment(form: NgForm) {
@@ -82,7 +97,7 @@ export class AppointmentComponent implements OnInit {
     // console.log(form.valid);
     // console.log(form.value);
     if (form.invalid) {
-      console.log('El formulario es invalido');
+      console.log("El formulario es invalido");
       return;
     }
 
@@ -91,17 +106,15 @@ export class AppointmentComponent implements OnInit {
     this.appointment.isCancelled = false;
     this.appointment.isConfirmed = false;
     this.appointment.customer = this._userServices.user._id;
-    this.appointment.professional = '5ac88b683cb34b07e677afca';
+    this.appointment.professional = "5ac88b683cb34b07e677afca";
 
-    this._appointmentServices.createOrUploadAppointment( this.appointment )
-        .subscribe( (appointment: any) => {
-          console.log('Respuesta al crear la cita ');
-          console.log(appointment);
+    this._appointmentServices
+      .createOrUploadAppointment(this.appointment)
+      .subscribe((appointment: any) => {
+        console.log("Respuesta al crear la cita ");
+        console.log(appointment);
 
-          this.router.navigate(['/appointment', appointment._id]);
-
-        });
-
+        this.router.navigate(["/appointment", appointment._id]);
+      });
   }
-
 }

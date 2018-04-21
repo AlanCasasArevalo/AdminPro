@@ -29,6 +29,15 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label>Profesional</label>
+                            <select (change)="professionalChanged( $event.target.value )" [(ngModel)]="appointment.professional" name="appointment.professional" class="form-control" required>
+                            <option value="">Seleccione un profesional:</option>
+                            <option *ngFor="let professional of professionals" [value]="professional._id">
+                                {{ professional.name }}
+                            </option>
+                            </select>
+                        </div>
 
                         <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
                         <i class="fa fa-save"></i>

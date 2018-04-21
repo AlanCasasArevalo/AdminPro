@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { URL_SERVICES } from '../../config/config';
@@ -15,7 +15,6 @@ import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 
 import swal from 'sweetalert2';
-
 @Injectable()
 export class AppointmentsService {
 
@@ -27,8 +26,10 @@ export class AppointmentsService {
   ) { }
 
   loadProfessionalAppointmentsFromServer() {
+    // http://localhost:3000/apiv1/appointments/professional?id=5adaf5355552e8243796f79e
     let url = URL_SERVICES + '/appointments/professional';
-    url += '?token=' + this._userService.token;
+    url += '?id=' + this._userService.user._id;
+    url += '&token=' + this._userService.token;
     console.log('URL en la carga de citas');
     console.log( url );
 
@@ -42,6 +43,30 @@ export class AppointmentsService {
     console.log( url );
 
     return this.http.get( url );
+  }
+
+  loadProfessionalsFromServer() {
+    let url = URL_SERVICES + '/users';
+    url += '?isProfessional=true';
+    url += '&token=' + this._userService.token;
+    return this.http.get(url).map((response: any) => {
+      console.log(response);
+      return response.result.rows;
+    });
+  }
+
+  loadProfessionalByID(id: string) {
+    // console.log('Entramos en el back-end');
+    let url = URL_SERVICES + '/users';
+    // http://localhost:3000/apiv1/users?isProfessional=true
+    url += '?isProfessional=true';
+    url += '&token=' + this._userService.token;
+    // console.log('Url del back');
+    // console.log(url);
+    return this.http.get(url).map((response: any) => {
+      console.log(response);
+      return response.result.rows;
+    });
   }
 
 
